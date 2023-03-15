@@ -1,39 +1,64 @@
-import logo from './logo.svg';
-import './App.css';
-// import React from 'react';
-// import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-// import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
+import logo from "./logo.svg";
+import "./App.css";
 
-// const client = new ApolloClient({
-//   uri: '/graphql',
-//   cache: new InMemoryCache(),
-// });
+import  Profile  from "./pages/Profile";
+import  CreateRoutine  from "./pages/CreateRoutine";
+import  RoutineLogg  from "./pages/RoutineLogg";
+
+import NavBar from "./components/NavBar";
+
+import { useState } from "react";
+
 
 function App() {
+  const [
+    currentPage,
+    setCurrentPage,
+  ] = useState("Profile");
+  const renderPage = () => {
+    switch (currentPage) {
+      case "Profile":
+        return <Profile />
+     
+      case "Create Routine":
+        return <CreateRoutine />
+       
+      case "Routine Logg":
+        return <RoutineLogg />
+      
+      default:
+        return <p>
+          error
+        </p>;
+    }
+  };
+
   return (
+ 
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-
-    // <ApolloProvider client={client}>
-    //   <Router>
-
-    //   </Router>
-    // </ApolloProvider>
+     
+        <NavBar
+          setCurrentPage={
+            setCurrentPage
+          }
+        />
+        <img
+          src={logo}
+          className="App-logo"
+          alt="logo"
+        />
+        <h1 className="text-3xl font-bold underline font-brand">
+          Hello world!
+        </h1>
+  
+        <div>
+          {renderPage()}
+          </div>
+  
+      </div>
+   
   );
 }
 
 export default App;
+
