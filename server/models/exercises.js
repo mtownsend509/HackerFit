@@ -6,12 +6,12 @@ const exerciseSchema = new Schema(
             type: String,
             required: true,
         },
-        muscleGroup: {
+        muscle: {
             type: String,
             required: true,
         },
-        difficulty: {
-            type: Number,
+        instructions: {
+            type: String,
         }
     },
 );
