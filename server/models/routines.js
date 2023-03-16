@@ -1,4 +1,6 @@
 const { Schema, model } = require('mongoose');
+// const exerciseSchema = require('./exercises');
+
 
 const routineSchema = new Schema(
     {
@@ -11,10 +13,13 @@ const routineSchema = new Schema(
             type: String,
             required: true,
         },
-        // exercises: [
-        //     type: Schema.Types.ObjectId,
-        //     ref: 'exercises'
-        // ],
+        exercises: 
+            //[exerciseSchema]
+             { type: [String] }     
+            //  { type: [{
+            //     reps: {type: Number,},
+            //     sets: {type: Number}
+            //  }] }     
     },
 );
 
