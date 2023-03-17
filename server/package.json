@@ -4,7 +4,6 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "@apollo/server": "^4.4.0",
     "start": "node server.js",
     "seed": "node seeds/seed.js",
     "watch": "nodemon server.js"
@@ -12,7 +11,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@apollo/server": "^4.4.0",
     "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.11.6",
     "graphql": "^15.5.1"
   },
