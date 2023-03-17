@@ -16,6 +16,6 @@ const exerciseSchema = new Schema(
     },
 );
 
-const exercises = model('exercises', exerciseSchema);
+const Exercises = model('exercises', exerciseSchema);
 
-module.exports = exercises
+module.exports = Exercises
