@@ -1,5 +1,7 @@
 const { Users, Routines, Exercises } = require('../models');
-// const { signToken } = require("../utils/auth");
+const { signToken } = require("../utils/auth");
+// const bcrypt = require("bcrypt");
+const { AuthenticationError } = require("apollo-server-express");
 
 
 const resolvers = {
@@ -20,11 +22,11 @@ const resolvers = {
 
 
     Mutation: {
-        login: async (parent, { email, password }) => {
-            const user = await Users.findOne({ email });
+        login: async (parent, { username, password }) => {
+            const user = await Users.findOne({ username });
       
             if (!user) {
-              throw new GraphQLError("No profile with this email found!", {
+              throw new AuthenticationError("No profile with this username found!", {
                 extensions: {
                   code: "UNAUTHENTICATED",
                 },
@@ -32,21 +34,21 @@ const resolvers = {
             }
       
             const correctPw = await user.isCorrectPassword(password);
+            console.log(user)
+            console.log(password)
+            console.log(correctPw)
       
             if (!correctPw) {
-              throw new GraphQLError("Incorrect credentials", {
-                extensions: {
-                  code: "UNAUTHENTICATED",
-                },
-              });
+              throw new AuthenticationError("Incorrect password");
             }
+      
       
             const token = signToken(user);
       
             return { token, user };
           },
-        addUser: async (parent, {body}) => {
-            const user = await Users.create({body});
+        addUser: async (parent, { username, email, password }) => {
+            const user = await Users.create({username, email, password});
             const token= signToken(user);
             return { token, user};
         },

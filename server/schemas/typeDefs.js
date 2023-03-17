@@ -21,7 +21,7 @@ const typeDefs = `#graphql
     }
 
     type Auth {
-        _id: ID!
+        token: ID!
         user: User
     }
 
@@ -33,7 +33,7 @@ const typeDefs = `#graphql
     }
 
     type Mutation {
-        login(email: String!, password: String!): Auth
+        login(username: String!, password: String!): Auth
         addUser(username: String!, email: String!, password: String!): Auth
         createRoutine(name: String!): Routine
         addExercise(routineId: ID!, name: String!): Routine
