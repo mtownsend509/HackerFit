@@ -5,17 +5,17 @@ const Footer = () => {
   const location = useLocation();
   const navigate = useNavigate();
   return (
-    <footer className="w-100 mt-auto bg-secondary p-4">
-      <div className="container text-center mb-5">
+    <footer className="w-100 h-screen  mt-[-400px] bg-secondary p-4">
+      <div className="text-center">
         {location.pathname !== '/' && (
           <button
-            className="btn btn-dark mb-3"
+            className="text-gray-500 hover:scale-110 duration-300"
             onClick={() => navigate(-1)}
           >
             &larr; Go Back
           </button>
         )}
-        <h4>
+        <h4 className='text-gray-500 '>
           Made with{' '}
           <span
             className="emoji"
@@ -25,7 +25,7 @@ const Footer = () => {
           >
             ❤️
           </span>{' '}
-          by the Tech Bros team.
+          by the Hacker Fit team
         </h4>
       </div>
     </footer>

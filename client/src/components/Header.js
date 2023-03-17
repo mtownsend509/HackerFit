@@ -8,8 +8,8 @@ const Header = () => {
     Auth.logout();
   };
   return (
-    <header className='h-[200px]' >
-      <div className="nav flex justify-between items-center w-full px-4 fixed pr-20 pl-10 bg-slate-400">
+    <header className='h-[300px]' >
+      <div className="nav flex justify-between items-center w-full px-4 fixed pr-20 pl-10 bg-slate-400 h-[150px]">
               <div>
                   
           <Link className="" to="/">
@@ -39,10 +39,10 @@ const Header = () => {
           ) : (
               <>
               
-              <Link className="btn btn-lg btn-info text-xl hover:underline text-white bg-gradient-to-b from-teal-300 to-teal-600 px-6 py-3 my-8 flex-items-center rounded-md hover:scale-110 duration-300 mb-20 ml-5 " to="/login">
+              <Link className="text-xl hover:underline text-white bg-gradient-to-br from-teal-300 via-teal-400 to-teal-600 px-6 py-3 my-8 flex-items-center rounded-md hover:scale-110 duration-300 mb-20 ml-5 " to="/login">
                 Login
               </Link>
-              <Link className="btn btn-lg btn-light text-xl hover:underline m-2 text-gray-600 bg-gradient-to-b from-gray-300 to-white px-6 py-3 my-8  flex-items-center rounded-md hover:scale-110 duration-300 mb-20 ml-5" to="/signup">
+              <Link className="btn btn-lg btn-light text-xl hover:underline m-2 text-gray-600 bg-gradient-to-br from-white via-gray-100 to-gray-300 px-6 py-3 my-8  flex-items-center rounded-md hover:scale-110 duration-300 mb-20 ml-5" to="/signup">
                 Signup
                 </Link>
             </>
