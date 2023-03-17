@@ -1,19 +1,19 @@
 const typeDefs = `#graphql
     type User {
-        _id: _id
+        _id: ID!
         username: String
         email: String
         savedRoutines: [Routine]!
     }
 
     type Routine {
-        _id: _id
+        _id: ID!
         name: String
         exercises: [Exercise]!
     }
 
     type Exercise {
-        _id: _id
+        _id: ID!
         name: String
         muscle: String
         instructions: String

@@ -1,5 +1,5 @@
 const { Users, Routines, Exercises } = require('../models');
-const { signToken } = require("../utils/auth");
+// const { signToken } = require("../utils/auth");
 
 
 const resolvers = {
@@ -19,7 +19,7 @@ const resolvers = {
     },
 
 
-    Mutations: {
+    Mutation: {
         login: async (parent, { email, password }) => {
             const user = await Users.findOne({ email });
       
