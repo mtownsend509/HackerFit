@@ -15,7 +15,7 @@ export const LOGIN_USER = gql`
 
 export const ADD_USER = gql`
   mutation addUser($username: String!, $password: String!) {
-    addUser(username: $username, password: $password) {
+    addUser(username: $username, email: $email, password: $password) {
       token
       user {
         _id
@@ -26,13 +26,32 @@ export const ADD_USER = gql`
 `;
 
 export const ADD_ROUTINE = gql`
-  mutation addRoutine($routineText: String!) {
-    addRoutine(thoughtText: $routineText) {
+  mutation createRoutine($routineText: String!) {
+    createRoutine(name: $name) {
+    _id
+    name
+    exercises {
       _id
-      routineText
-      routineAuthor
-      createdAt
-    
+      name
+      muscle
+      instructions
     }
   }
+}
 `;
+
+export const ADD_EXERCISE = gql`
+  mutation addExercise($routineId: ID!, $name: String!) {
+  addExercise(routineId: $routineId, name: $name) {
+    _id
+    name
+    exercises {
+      _id
+      name
+      muscle
+      instructions
+    }
+  }
+}
+`;
+

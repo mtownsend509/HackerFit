@@ -1,21 +1,22 @@
 const { Users, Routines, Exercises } = require('../models');
 const { signToken } = require("../utils/auth");
-// const bcrypt = require("bcrypt");
 const { AuthenticationError } = require("apollo-server-express");
 
 
 const resolvers = {
     Query: {
         user: async (parent, {username}) => {
-            return Users.findOne({username: username})
+            return Users.findOne({username: username}).populate("savedRoutines")
         },
         exercises: async (parent, {muscle}) => {
             return Exercises.findOne({muscle: muscle})
         },
-        routines: async() => {
-            return Routines.find({})
+        routines: async(parent, {
+          username }) => {
+            const params = username ? { username } : {};
+            return Routines.find(params);
         },
-        routine: async() => {
+        routine: async(parent, { routineId }) => {
             return Routines.findOne({_id: routineId})
         }
     },
@@ -34,9 +35,6 @@ const resolvers = {
             }
       
             const correctPw = await user.isCorrectPassword(password);
-            console.log(user)
-            console.log(password)
-            console.log(correctPw)
       
             if (!correctPw) {
               throw new AuthenticationError("Incorrect password");

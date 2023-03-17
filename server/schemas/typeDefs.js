@@ -17,7 +17,6 @@ const typeDefs = `#graphql
         name: String
         muscle: String
         instructions: String
-        reps_sets: String
     }
 
     type Auth {
@@ -27,8 +26,8 @@ const typeDefs = `#graphql
 
     type Query {
         user(username: String!): User
-        exercises(muscle: String!): [Exercise]
-        routines(name: String!): [Routine]
+        exercises(muscle: String!): Exercise
+        routines(username: String!): [Routine]
         routine(routineId: ID!): Routine
     }
 
@@ -47,3 +46,7 @@ const typeDefs = `#graphql
 `
 
 module.exports = typeDefs
+
+
+
+
