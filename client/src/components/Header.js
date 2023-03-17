@@ -24,9 +24,13 @@ const Header = () => {
                 {Auth.getProfile().data.username}'s profile
               </Link>
                      {/* another link for each url    */}
-              <Link to="/Profile">Profile</Link>
-                <Link to=" /New Routine">New Routine</Link>
-                <Link to=" /Routine Logg">Routine Logg</Link> 
+                <div>
+                  <div className="flex flex-row px-2 mt-4">
+                    <div className="ml-4"><Link to="/RoutineLog">Routine Log</Link></div>
+                    <div className="ml-4"><Link to="/Profile">Profile</Link></div>
+                    <div className="ml-4"><Link to="/NewRoutine">New Routine</Link></div>
+                  </div>
+                </div>
               
               <button className="btn btn-lg btn-light m-2" onClick={logout}>
                 Logout
@@ -41,8 +45,6 @@ const Header = () => {
               <Link className="btn btn-lg btn-light text-xl hover:underline m-2 text-gray-600 bg-gradient-to-b from-gray-300 to-white px-6 py-3 my-8  flex-items-center rounded-md hover:scale-110 duration-300 mb-20 ml-5" to="/signup">
                 Signup
                 </Link>
-          
-               
             </>
           )}
         </div>
