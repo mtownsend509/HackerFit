@@ -14,13 +14,6 @@ const routineSchema = new Schema(
             required: true,
         },
         exercises: 
-            // [
-            //     {
-            //       type: Schema.Types.ObjectId,
-            //       ref: "exercises",
-            //     },
-            //   ],
-
              [ {
                 sets: {
                 type: Number,

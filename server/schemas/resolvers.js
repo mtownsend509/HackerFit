@@ -99,37 +99,37 @@ const resolvers = {
         //     }
         //     throw new AuthenticationError("You need to be logged in!");
         // },
-       deleteRoutine: async (parent, { routineId }, context) => {
-            if (context.user) {
-              const routine = await Routines.findOneAndDelete({
-                _id: routineId
-              });
+      //  deleteRoutine: async (parent, { routineId }, context) => {
+      //       if (context.user) {
+      //         const routine = await Routines.findOneAndDelete({
+      //           _id: routineId
+      //         });
       
-              await Users.findOneAndUpdate(
-                { _id: context.user._id },
-                { $pull: { savedRoutines: routine._id } }
-              );
+      //         await Users.findOneAndUpdate(
+      //           { _id: context.user._id },
+      //           { $pull: { savedRoutines: routine._id } }
+      //         );
       
-              return routine;
-            }
-            throw new AuthenticationError("You need to be logged in!");
-          },
-        deleteExercise: async (parent, { exerciseId, routineId }, context) => {
-            if (context.user) {
-              return Routines.findOneAndUpdate(
-                { _id: routineId },
-                {
-                  $pull: {
-                    exercises: {
-                      _id: exerciseId
-                    },
-                  },
-                },
-                { new: true }
-              );
-            }
-            throw new AuthenticationError("You need to be logged in!");
-          },
+      //         return routine;
+      //       }
+      //       throw new AuthenticationError("You need to be logged in!");
+      //     },
+      //   deleteExercise: async (parent, { exerciseId, routineId }, context) => {
+      //       if (context.user) {
+      //         return Routines.findOneAndUpdate(
+      //           { _id: routineId },
+      //           {
+      //             $pull: {
+      //               exercises: {
+      //                 _id: exerciseId
+      //               },
+      //             },
+      //           },
+      //           { new: true }
+      //         );
+      //       }
+      //       throw new AuthenticationError("You need to be logged in!");
+      //     },
 
         
         // updateRoutine: async (parent, { _id,Title, muscle, exercises }) => {
