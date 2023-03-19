@@ -50,19 +50,23 @@ const resolvers = {
             const token= signToken(user);
             return { token, user};
         },
-        createRoutine: async (parent, { name }, context)  => {
-            if (context.user) {
-                const routine = await Routines.create( { name });
-            await Users.findOneAndUpdate(
-                { _id: context.user._id},
-                { $addToSet: { savedRoutines: routine._id}}
-            );
+        createRoutine: async (parent, { Title, muscleGroups, exercises }
+          // , context
+          )  => {
+            // if (context.user) {
+                const routine = await Routines.create( { Title, muscleGroups, exercises });
+            // await Users.findOneAndUpdate(
+            //     { _id: context.user._id},
+            //     { $addToSet: { savedRoutines: routine._id}}
+            // );
             return routine
-            }
-            throw new AuthenticationError("You need to be logged in!");
-        },
-        addExercise: async (parent, { routineId, name }, context) => {
-            if (context.user) {
+            },
+            // throw new AuthenticationError("You need to be logged in!");
+        // },
+        addExercise: async (parent, { routineId, name, muscle, instructions }, 
+          // context
+          ) => {
+            // if (context.user) {
               return Routines.findOneAndUpdate(
                 { _id: routineId },
                 {
@@ -75,9 +79,9 @@ const resolvers = {
                   runValidators: true,
                 }
               );
-            }
-            throw new AuthenticationError("You need to be logged in!");
-          },
+            },
+          //   throw new AuthenticationError("You need to be logged in!");
+          // },
         // updateExercise: async (parent, { exerciseId,reps_sets}, context) => {
         //     if (context.user) {
         //         return Exercises.findOneAndUpdate(

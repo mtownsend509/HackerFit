@@ -1,5 +1,5 @@
 const { Schema, model } = require('mongoose');
-// const exerciseSchema = require('./exercises');
+const exerciseSchema = require('./exercises');
 
 
 const routineSchema = new Schema(
@@ -14,12 +14,33 @@ const routineSchema = new Schema(
             required: true,
         },
         exercises: 
-            //[exerciseSchema]
-             { type: [String] }     
-            //  { type: [{
-            //     reps: {type: Number,},
-            //     sets: {type: Number}
-            //  }] }     
+            // [
+            //     {
+            //       type: Schema.Types.ObjectId,
+            //       ref: "exercises",
+            //     },
+            //   ],
+
+             { type: [{
+                reps: {
+                type: Number,
+            },
+                sets: {
+                type: Number
+            },
+                name: {
+                    type: String,
+                    required: true,
+                },
+                muscle: {
+                    type: String,
+                    required: true,
+                },
+                instructions: {
+                    type: String,
+                    required: true,
+                }
+             }] }     
     },
 );
 
