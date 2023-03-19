@@ -1,5 +1,5 @@
 const { Schema, model } = require('mongoose');
-const exerciseSchema = require('./exercises');
+// const exerciseSchema = require('./exercises');
 
 
 const routineSchema = new Schema(
@@ -21,26 +21,24 @@ const routineSchema = new Schema(
             //     },
             //   ],
 
-             { type: [{
-                reps: {
-                type: Number,
-            },
+             [ {
                 sets: {
-                type: Number
-            },
+                type: Number,
+                },
+                reps: {
+                    type: Number,
+                },
                 name: {
                     type: String,
                     required: true,
                 },
                 muscle: {
                     type: String,
-                    required: true,
                 },
                 instructions: {
                     type: String,
-                    required: true,
                 }
-             }] }     
+             }]  
     },
 );
 
