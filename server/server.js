@@ -7,6 +7,8 @@ const {
 } = require("@apollo/server/plugin/drainHttpServer");
 const http = require("http");
 
+const path = require('path');
+
 const { authMiddleware } = require("./utils/auth");
 
 // Import the two parts of a GraphQL schema
@@ -21,18 +23,19 @@ const httpServer = http.createServer(app);
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
+  context: authMiddleware,
+  // plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
 });
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../client/build")));
+  app.use(express.static(path.join(__dirname, "../build/public")));
 }
 
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "../client/build/index.html"));
+  res.sendFile(path.join(__dirname, "../client/public/index.html"));
 });
 
 // Create a new instance of an Apollo server with the GraphQL schema
