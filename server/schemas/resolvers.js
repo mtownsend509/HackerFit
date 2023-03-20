@@ -63,7 +63,7 @@ const resolvers = {
             },
             // throw new AuthenticationError("You need to be logged in!");
         // },
-        addExercise: async (parent, { routineId, exerciseId, name, muscle, instructions }, 
+        addExercise: async (parent, { routineId, name, muscle, instructions }, 
           // context
           ) => {
             // if (context.user) {
@@ -71,7 +71,7 @@ const resolvers = {
                 { _id: routineId },
                 {
                   $addToSet: {
-                    exercises: { exerciseId, name, muscle, instructions },
+                    exercises: { name, muscle, instructions },
                   },
                 },
                 {

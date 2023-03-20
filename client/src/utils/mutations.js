@@ -42,14 +42,12 @@ export const ADD_ROUTINE = gql`
 export const ADD_EXERCISE = gql`
   mutation addExercise(
     $routineId: ID!
-    $exerciseId: ID!
     $name: String!
     $muscle: String!
     $instructions: String!
   ) {
     addExercise(
       routineId: $routineId
-      exerciseId: $exerciseId
       name: $name
       muscle: $muscle
       instructions: $instructions
