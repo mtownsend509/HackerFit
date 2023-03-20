@@ -82,73 +82,76 @@ const resolvers = {
             },
           //   throw new AuthenticationError("You need to be logged in!");
           // },
-        // updateExercise: async (parent, { exerciseId,reps_sets}, context) => {
-        //     if (context.user) {
-        //         return Exercises.findOneAndUpdate(
-        //             {_id: exerciseId},
-        //             {
-        //                 $addtoSet: {
-        //                     reps_sets: reps_sets
-        //                 },
-        //             },
-        //             {
-        //                 new: true,
-        //                 runValidators: true,
-        //             }
-        //         );
-        //     }
-        //     throw new AuthenticationError("You need to be logged in!");
-        // },
-      //  deleteRoutine: async (parent, { routineId }, context) => {
-      //       if (context.user) {
-      //         const routine = await Routines.findOneAndDelete({
-      //           _id: routineId
-      //         });
+        updateExercise: async (parent, { routineId, exerciseId, reps, sets, name, muscle, instructions}
+          // , context
+          ) => {
+            // if (context.user) {
+                return Routines.findOneAndUpdate(
+                    {'exercises._id' : exerciseId},
+                    {
+                        $set: {
+                          'exercises.$.reps': reps,
+                          'exercises.$.sets': sets,
+                          'exercises.$.name': name,
+                          'exercises.$.muscle': muscle,
+                          'exercises.$.instructions': instructions
+                        }
+                    },
+                    {
+                        new: true,
+                        runValidators: true,
+                    }
+                );
+            // }
+            // throw new AuthenticationError("You need to be logged in!");
+        },
+       deleteRoutine: async (parent, { routineId }
+        // , context
+        ) => {
+            // if (context.user) {
+              const routine = await Routines.findOneAndDelete({
+                _id: routineId
+              });
       
-      //         await Users.findOneAndUpdate(
-      //           { _id: context.user._id },
-      //           { $pull: { savedRoutines: routine._id } }
-      //         );
+              // await Users.findOneAndUpdate(
+              //   { _id: context.user._id },
+              //   { $pull: { savedRoutines: routine._id } }
+              // );
       
-      //         return routine;
-      //       }
-      //       throw new AuthenticationError("You need to be logged in!");
-      //     },
-      //   deleteExercise: async (parent, { exerciseId, routineId }, context) => {
-      //       if (context.user) {
-      //         return Routines.findOneAndUpdate(
-      //           { _id: routineId },
-      //           {
-      //             $pull: {
-      //               exercises: {
-      //                 _id: exerciseId
-      //               },
-      //             },
-      //           },
-      //           { new: true }
-      //         );
-      //       }
-      //       throw new AuthenticationError("You need to be logged in!");
-      //     },
+              return routine;
+            },
+          //   throw new AuthenticationError("You need to be logged in!");
+          // },
+        deleteExercise: async (parent, { exerciseId, routineId }
+          // , context
+          ) => {
+            // if (context.user) {
+              return Routines.findOneAndUpdate(
+                { _id: routineId },
+                {
+                  $pull: {
+                    exercises: {
+                      _id: exerciseId
+                    },
+                  },
+                },
+                { new: true }
+              );
+            },
+          //   throw new AuthenticationError("You need to be logged in!");
+          // },
 
         
-        // updateRoutine: async (parent, { _id,Title, muscle, exercises }) => {
-        //     const newRoutine = await Routines.findOneAndUpdate(
-        //         { _id },
-        //         {Title: Title},
-        //         {muscle: muscle},
-        //         {exercises: exercises},
-        //         { new: true }
-        //     );
-        //     return newRoutine;
-        // },
-        // createUser: async (parent, {username, password}) => {
-        //     const newUser = await Users.create(
-        //         {username: username},
-        //         {password: password}
-        //     );
-        //     return newUser;
-        // }
+        updateRoutine: async (parent, { routineId ,Title, muscleGroups,}) => {
+            const newRoutine = await Routines.findOneAndUpdate(
+                { _id: routineId },
+                {Title: Title,
+                muscleGroups: muscleGroups,},
+                {new: true }
+            );
+            return newRoutine;
+        },
+
     }
 };
 
