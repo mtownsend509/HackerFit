@@ -14,12 +14,24 @@ const routineSchema = new Schema(
             required: true,
         },
         exercises: 
-            //[exerciseSchema]
-             { type: [String] }     
-            //  { type: [{
-            //     reps: {type: Number,},
-            //     sets: {type: Number}
-            //  }] }     
+             [ {
+                sets: {
+                type: Number,
+                },
+                reps: {
+                    type: Number,
+                },
+                name: {
+                    type: String,
+                    required: true,
+                },
+                muscle: {
+                    type: String,
+                },
+                instructions: {
+                    type: String,
+                }
+             }]  
     },
 );
 
