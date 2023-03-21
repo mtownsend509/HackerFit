@@ -63,22 +63,17 @@ const Login = (props) => {
   return (
     <main
       name="login"
-      className="h-full w-full mt-[150px]"
+      className="w-full mt-[150px]"
     >
       <div className="flex flex-col items-center mx-auto max-w-screen-lg">
         <div className="w-full max-w-md mt-20">
-          <h4 className="bg-slate-400  dark:bg-slate-700 text-white text-md p-4 dark:rounded-t-md border border-slate-400  dark:border-slate-700 font-bold">
+          <h4 className="bg-slate-400  dark:bg-slate-600 text-white text-md p-6 dark:rounded-t-md border border-slate-400  dark:border-slate-600 font-bold">
             Login
           </h4>
           <div className="inline ">
             {data ? (
               <p>
-                Success! You
-                may now head{" "}
-                <Link to="/">
-                  back to the
-                  homepage.
-                </Link>
+                Success! 
               </p>
             ) : (
               <form
@@ -149,7 +144,7 @@ const Login = (props) => {
                   </div>
                   <label
                     for="remember"
-                    className="ml-2 text-sm font-medium text-gray-00 dark:text-gray-200"
+                    className="ml-2 text-sm font-medium text-gray-500 dark:text-gray-200"
                   >
                     Remember
                     me

@@ -21,6 +21,7 @@ function Dropdown(props) {
  };
     
     return (
+        <div className="">
         
         <div className="relative flex flex-col items-center w-[340px] h-[340px] rounded-lg">
             <button
@@ -60,7 +61,8 @@ function Dropdown(props) {
                     )}
                 </div>
             )}
-        </div>
+            </div>
+            </div>
    );
 }
 

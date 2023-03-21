@@ -10,12 +10,12 @@ const Footer = () => {
   const navigate =
     useNavigate();
   return (
-    <footer className="flex justify-around items-center w-full p-4  bg-white dark:bg-stone-800">
+    <footer className="flex justify-around items-center w-full p-4 bg-slate-400 dark:bg-stone-800">
       <div className="text-center">
         {location.pathname !==
           "/" && (
           <button
-            className="text-gray-500  dark:text-white dark:hover:text-slate-200 hover:text-gray-700"
+            className="text-white dark:hover:text-slate-400 hover:text-gray-500"
             onClick={() =>
               navigate(-1)
             }
@@ -24,8 +24,8 @@ const Footer = () => {
           </button>
         )}
 
-        <div className="flex flex-row">
-          <h4 className="text-gray-500  dark:text-white">
+        <div className="flex flex-row text-white">
+          <h4>
             Made with
           </h4>
           <span
@@ -36,7 +36,7 @@ const Footer = () => {
           >
             ❤️
           </span>
-          <h4 className="text-gray-500  dark:text-white">
+          <h4>
             by the Hacker Fit
             team
           </h4>
