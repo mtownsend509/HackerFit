@@ -1,103 +1,176 @@
-import React, { useState } from 'react';
-// import Header from '../components/Header'
-// import Footer from '../components/Footer';
-// import NavBar from '../components/NavBar';
-const fetch = require('node-fetch');
+import React, {
+  useEffect,
+  useState,
+} from "react";
 
+import Dropdown from "../components/Dropdown";
+
+const fetch = require("node-fetch");
 const options = {
-	method: 'GET',
-	headers: {
-		'X-Api-Key': process.env.API_KEY, 
-		// 'X-RapidAPI-Host': 'exercises-by-api-ninjas.p.rapidapi.com'
-	}
+  method: "GET",
+  headers: {
+    "X-Api-Key":
+      process.env
+        .REACT_APP_API_KEY,
+    // 'X-RapidAPI-Host': 'exercises-by-api-ninjas.p.rapidapi.com'
+  },
 };
 
-const searchAPIExercises = (query) => {
-    return fetch(`https://api.api-ninjas.com/v1/exercises?muscle=${query}`, options)
+const searchAPIExercises = (
+  query
+) => {
+  return fetch(
+    `https://api.api-ninjas.com/v1/exercises?muscle=${query}`,
+    options
+  );
 };
 
-const SearchExercises = () => {
+const NewRoutine = () => {
   // create state for holding returned google api data
-  const [searchedExercises, setSearchedExercises] = useState([]);
+  const [
+    searchedExercises,
+    setSearchedExercises,
+  ] = useState([]);
   // create state for holding our search field data
-  const [searchInput, setSearchInput] = useState('');
+  const [
+    searchInput,
+    setSearchInput,
+  ] = useState("");
 
-  const handleFormSubmit = async (event) => {
-    event.preventDefault();
-
-    if (!searchInput) {
-      return false;
-    }
-
-    try {
-      const response = await searchAPIExercises(searchInput);
-        console.log("search input =", searchInput)
-        console.log("exercise results", response)
-      if (!response.ok) {
-        throw new Error('something went wrong!');
+  
+  const handleFormSubmit =
+    async (event) => {
+      // event.preventDefault();
+      
+      if (!searchInput) {
+        return false;
       }
 
-      const items  = await response.json();
-      console.log("items", items)
-      const exerciseData = items.map((exercise) => ({
-        name: exercise.name,
-        muscle: exercise.muscle,
-        difficulty: exercise.difficulty,
-        instructions: exercise.instructions
-      }));
+      try {
+        const response =
+          await searchAPIExercises(
+            searchInput
+          );
+        
+        console.log(
+          "search input =",
+          searchInput
+        );
+        console.log(
+          "exercise results",
+          response
+        );
+        if (!response.ok) {
+          throw new Error(
+            "something went wrong!"
+          );
+        }
 
-      setSearchedExercises(exerciseData);
-      setSearchInput('');
-    } catch (err) {
-      console.error(err);
-    }
-  };
+        
+        const items =
+          await response.json();
+        console.log(
+          "items",
+          items
+        );
+        const exerciseData =
+          items.map(
+            (exercise) => ({
+              name: exercise.name,
+              muscle:
+                exercise.muscle,
+              difficulty:
+                exercise.difficulty,
+              instructions:
+                exercise.instructions,
+            })
+          );
 
+        setSearchedExercises(
+          exerciseData
+        );
+        setSearchInput("");
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    useEffect(() => {
+      handleFormSubmit();
+    }, [searchInput, handleFormSubmit]);
+  
   return (
     <>
-      <Jumbotron fluid className='text-light bg-dark'>
-        <Container>
-          <h1>Search for Exercises!</h1>
-          <Form onSubmit={handleFormSubmit}>
-            <Form.Row>
-              <Col xs={12} md={8}>
-                <Form.Control
-                  name='searchInput'
-                  value={searchInput}
-                  onChange={(e) => setSearchInput(e.target.value)}
-                  type='text'
-                  size='lg'
-                  placeholder='Search for an exercise'
-                />
-              </Col>
-              <Col xs={12} md={4}>
-                <Button type='submit' variant='success' size='lg'>
-                  Submit Search
-                </Button>
-              </Col>
-            </Form.Row>
-          </Form>
-        </Container>
-      </Jumbotron>
+      <main name="NewRoutine"className="w-full mt-[150px]">
+        <div className="flex flex-col items-center mx-auto max-w-screen-lg ">
+          <div className="mt-10 ">
+            <Dropdown
+              onSelect={setSearchInput}
+            />
+          </div>
 
-      <Container>
-        <h2>
-          {searchedExercises.length
-            ? `Viewing ${searchedExercises.length} results:`
-            : 'Search for an exercise to begin'}
-        </h2>
-        <CardColumns>
-          {searchedExercises.map((exercise) => {
-            return (
-              <Card key={exercise.name} border='dark'>
-                {/* {book.image ? (
-                  <Card.Img src={book.image} alt={`The cover for ${book.title}`} variant='top' />
-                ) : null} */}
-                <Card.Body>
-                  <Card.Title>{exercise.muscle}</Card.Title>
-                  <p className=''>Exercise Name: {exercise.name}</p>
-                  <p className=''>Instructions: {exercise.instructions}</p>
-                  {/* {Auth.loggedIn() && (
+          <div className="grid mt-[-200px] gap-4 text-neutral-600 dark:text-slate-300 grid-cols-1">
+            {searchedExercises.map(
+              (exercise) => {
+                return (
+                  <div
+                    key={
+                      exercise.name
+                    }
+                  >
+                    <div>
+                      <div className="shadow shadow-gray-600 rounded-lg">
+                        <div>
+                          <p className="px-2 py-3 m-2 font-bold">
+                            Muscle
+                            Group:{" "}
+                            {
+                              exercise.muscle
+                            }
+                          </p>
+                          <p className="px-2 py-3 m-2 font-bold">
+                            Exercise
+                            Name:{" "}
+                            {
+                              exercise.name
+                            }
+                          </p>
+                          <p className="px-2 py-3 m-2">
+                            Instructions:{" "}
+                            {
+                              exercise.instructions
+                            }
+                          </p>
+            
+                          <button className="ml-3 mb-4 bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 hover:to-red-500 text-white font-bold py-2 px-4 rounded-md"
+                            style={{
+                              cursor:
+                                "pointer",
+                            }}
+                            type="submit"
+                            variant="success"
+                          >
+                              Add to workout
+                            </button>
+                     
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              }
+            )}
+          </div>
+        </div>
+      </main>
+    </>
+  );
+};
+
+export default NewRoutine;
+
+
+  {/* {Auth.loggedIn() && (
                     <Button
                       disabled={savedBookIds?.some((savedBookId) => savedBookId === book.bookId)}
                       className='btn-block btn-info'
@@ -107,15 +180,3 @@ const SearchExercises = () => {
                         : 'Save this Book!'}
                     </Button>
                   )} */}
-                </Card.Body>
-              </Card>
-            );
-          })}
-        </CardColumns>
-      </Container>
-    </>
-  );
-};
-
-export default SearchExercises;
-

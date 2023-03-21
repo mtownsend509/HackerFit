@@ -7,9 +7,18 @@ module.exports = {
     extend: {},
     fontFamily: {
       brand: ['Great Vibes'],
+    },
+    animation: {
+      beat: "beat 1s ease-out infinite",
+    },
+    keyframes: {
+      beat: {
+        "0%, 100%": { transform: "scale(1)" },
+        "25%": { transform: "scale(1.2)" },
+      },
     }
 
   },
   plugins: [],
-  // darkMode: 'class'
+  darkMode: 'class'
 }
