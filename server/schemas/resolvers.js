@@ -53,7 +53,7 @@ const resolvers = {
         createRoutine: async (parent, { Title, muscleGroups, exercises }
           // , context
           )  => {
-            // if (context.user) {
+            // if (context.user) 
                 const routine = await Routines.create( { Title, muscleGroups, exercises });
             // await Users.findOneAndUpdate(
             //     { _id: context.user._id},
