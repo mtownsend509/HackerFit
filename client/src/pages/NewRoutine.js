@@ -25,6 +25,21 @@ const searchAPIExercises = (
   );
 };
 
+
+
+
+const searchSingleAPIExercise = (
+  
+  query
+) => {
+  return fetch(
+    `https://api.api-ninjas.com/v1/exercises?name=${query}`,
+    options
+    
+  );
+ 
+};
+
 const NewRoutine = () => {
   // create state for holding returned google api data
   const [
@@ -101,8 +116,8 @@ const NewRoutine = () => {
   
   return (
     <>
-      <main name="NewRoutine"className="w-full mt-[150px]">
-        <div className="flex flex-col items-center mx-auto max-w-screen-lg ">
+      <main name="NewRoutine" className="w-full mt-[150px]  flex flex-row">
+        <div className="w-[50%] flex flex-col items-center mx-auto max-w-screen-lg ">
           <div className="mt-10 ">
             <Dropdown
               onSelect={setSearchInput}
@@ -142,13 +157,17 @@ const NewRoutine = () => {
                             }
                           </p>
             
-                          <button className="ml-3 mb-4 bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 hover:to-red-500 text-white font-bold py-2 px-4 rounded-md"
+                          <button
+                            id={exercise.name}
+                            className="ml-3 mb-4 bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 hover:to-red-500 text-white font-bold py-2 px-4 rounded-md"
                             style={{
                               cursor:
                                 "pointer",
                             }}
                             type="submit"
                             variant="success"
+                            onClick={searchSingleAPIExercise}
+
                           >
                               Add to workout
                             </button>
@@ -162,6 +181,114 @@ const NewRoutine = () => {
             )}
           </div>
         </div>
+
+
+        <div className="flex flex-col w-[45%] mt-[190px] items-center mx-auto max-w-screen-lg mb-4">
+          <div className="flex flex-row">
+            <input
+              className="w-[300px] font-bold px-4 py-3 block text-sm text-gray-400 bg-transparent border-2 rounded-lg border-b-2 border-gray-300 appearance-none dark:text-gray-200 dark:border-gray-300 focus:border-gray-400 dark:focus:border-gray-500 focus:outline-none focus:ring-0 peer"
+              placeholder="Routine name: "
+              required
+              name="email"
+              id="email"
+              type="text"
+              // value={
+              //   formState.email
+              // }
+              // onChange={
+              //   handleChange
+              // }
+            />
+            <button
+              className="ml-3 bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 hover:to-red-500 text-white font-bold py-3 px-4 rounded-md"
+              style={{
+                cursor:
+                  "pointer",
+              }}
+              type="submit"
+              variant="success"
+            >
+              Save routine
+            </button>
+          </div>
+
+          <div className="grid grid-cols-1 gap-4 mb-4 w-full text-neutral-600 dark:text-slate-300">
+            <div>
+              <div className="px-2 py-3">
+                <div className="mt-5">
+                  {searchedExercises.map(
+                    (
+                      exercise
+                    ) => {
+                      return (
+                        <div
+                          key={
+                            exercise.name
+                          }
+                        >
+                          <div  >
+                            <div className="border-b-2 border-b-gray-400">
+                              <div>
+                                <p className="px-2 py-3 m-2 font-bold">
+                                  Exercise
+                                  Name:{" "}
+                                  {
+                                    exercise.name
+                                  }
+                                </p>
+                                <p className="px-2 py-3 m-2">
+                                  Instructions:{" "}
+                                  {
+                                    exercise.instructions
+                                  }
+                                </p>
+
+                                  <div className="flex flex-row mb-4">
+                                <div name="sets"
+                                  className="flex flex-row">
+                                  <p className="px-2 py-3 mr-1">
+                                    Sets:
+                                  </p>
+                                  <input
+                                    className="w-[30%] font-bold px-2 p-2 mb-5 block text-sm text-gray-400 bg-transparent  border-b-2 border-gray-300 appearance-none dark:text-gray-200 dark:border-gray-300 focus:border-gray-400 dark:focus:border-gray-500 focus:outline-none focus:ring-0"
+                                    placeholder=" "
+                                    required
+                             
+                                    id="sets"
+                                    type="text"
+                                 
+                                  />
+                                </div>
+
+                                <div name='reps'
+                                  className="flex flex-row">
+                                    <p className="ml-[-100px] px-2 py-3">
+                                    Reps:
+                                  </p>
+                                  <input
+                                    className=" w-[50%] font-bold px-2 p-2 mb-5 block text-sm text-gray-400 bg-transparent border-b-2 border-gray-300 appearance-none dark:text-gray-200 dark:border-gray-300 focus:border-gray-400 dark:focus:border-gray-500 focus:outline-none focus:ring-0"
+                                    placeholder=" "
+                                    required
+                                    id="reps"
+                                    type="text"
+                                  />
+                                  </div>
+                                  </div>
+
+
+
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    }
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </main>
     </>
   );
@@ -169,14 +296,3 @@ const NewRoutine = () => {
 
 export default NewRoutine;
 
-
-  {/* {Auth.loggedIn() && (
-                    <Button
-                      disabled={savedBookIds?.some((savedBookId) => savedBookId === book.bookId)}
-                      className='btn-block btn-info'
-                      onClick={() => handleSaveBook(book.bookId)}>
-                      {savedBookIds?.some((savedBookId) => savedBookId === book.bookId)
-                        ? 'This book has already been saved!'
-                        : 'Save this Book!'}
-                    </Button>
-                  )} */}
