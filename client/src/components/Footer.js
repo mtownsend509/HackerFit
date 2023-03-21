@@ -10,7 +10,7 @@ const Footer = () => {
   const navigate =
     useNavigate();
   return (
-    <footer className="flex justify-around items-center w-full p-4 dark:bg-stone-800">
+    <footer className="flex justify-around items-center w-full p-4  bg-white dark:bg-stone-800">
       <div className="text-center">
         {location.pathname !==
           "/" && (

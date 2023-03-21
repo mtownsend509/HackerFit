@@ -41,8 +41,8 @@ const Signup = () => {
 
   return (
     <main name="signup"
-      className="h-screen w-full mt-[150px]  bg-white dark:bg-gradient-to-b from-slate-900 via-slate-700 to-slate-600">
-         <div className="flex flex-col items-center mx-auto max-w-screen-lg">
+      className=" w-full mt-[150px]">
+         <div className="flex flex-1 flex-col items-center mx-auto max-w-screen-lg">
         <div className="w-full max-w-md mt-20">
           <h4 className="bg-slate-400  dark:bg-slate-700 text-white text-md p-4 dark:rounded-t-md border border-slate-400  dark:border-slate-700 font-bold">
            Sign up

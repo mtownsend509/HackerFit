@@ -63,7 +63,7 @@ const Login = (props) => {
   return (
     <main
       name="login"
-      className="h-screen w-full mt-[150px] bg-white dark:bg-gradient-to-b from-slate-900 via-slate-700 to-slate-600"
+      className="h-full w-full mt-[150px]"
     >
       <div className="flex flex-col items-center mx-auto max-w-screen-lg">
         <div className="w-full max-w-md mt-20">
@@ -149,7 +149,7 @@ const Login = (props) => {
                   </div>
                   <label
                     for="remember"
-                    className="ml-2 text-sm font-medium text-gray-500 dark:text-gray-200"
+                    className="ml-2 text-sm font-medium text-gray-00 dark:text-gray-200"
                   >
                     Remember
                     me

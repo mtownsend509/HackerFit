@@ -11,13 +11,17 @@ import {
 
 
 
-function Dropdown() {
+function Dropdown(props) {
     const [isOpen, setIsOpen] =
         useState(false);
     
- 
+ function handleClick(searchTerm) {
+    props.onSelect(searchTerm)
+    setIsOpen(false);
+ };
     
     return (
+        
         <div className="relative flex flex-col items-center w-[340px] h-[340px] rounded-lg">
             <button
                 onClick={() =>
@@ -45,7 +49,7 @@ function Dropdown() {
                 
                             >
                                 <button className="font-bold"
-                                    
+                                onClick={ () => handleClick(item.muscle_group)}   
                                 >
                                     {
                                         item.muscle_group

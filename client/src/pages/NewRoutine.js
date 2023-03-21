@@ -1,4 +1,5 @@
 import React, {
+  useEffect,
   useState,
 } from "react";
 
@@ -36,10 +37,11 @@ const NewRoutine = () => {
     setSearchInput,
   ] = useState("");
 
+  
   const handleFormSubmit =
     async (event) => {
-      event.preventDefault();
-
+      // event.preventDefault();
+      
       if (!searchInput) {
         return false;
       }
@@ -49,6 +51,7 @@ const NewRoutine = () => {
           await searchAPIExercises(
             searchInput
           );
+        
         console.log(
           "search input =",
           searchInput
@@ -63,6 +66,7 @@ const NewRoutine = () => {
           );
         }
 
+        
         const items =
           await response.json();
         console.log(
@@ -91,66 +95,21 @@ const NewRoutine = () => {
       }
     };
 
+    useEffect(() => {
+      handleFormSubmit();
+    }, [searchInput, handleFormSubmit]);
+  
   return (
     <>
-      <main className="h-full w-full mt-[150px] bg-white dark:bg-gradient-to-b from-slate-900 via-slate-700 to-slate-600 pb-10">
-        <div className="flex flex-col items-center mx-auto max-w-screen-lg">
-          <div className="mt-10">
-          <Dropdown  />
-          </div>
-     
-          <div className="max-w-lg ">
-            <h2 className="">
-              {searchedExercises.length
-                ? `Viewing ${searchedExercises.length} results:`
-                :  "" }
-            </h2>
-            <form
-              onSubmit={
-                handleFormSubmit
-              }
-              className="bg-white rounded-b-md px-8 pt-6 pb-8 mb-4"
-            >
-              <div class="w-full mb-6">
-                <input
-                  name="searchInput"
-                  value={
-                    searchInput
-                  }
-                  onChange={(
-                    e
-                  ) =>
-                    setSearchInput(
-                      e.target
-                        .value
-                    )
-                  }
-                  type="text"
-                  size="lg"
-                  placeholder="Select muscle group"
-                />
-
-             
-                
-                <div class="flex py-4">
-                  <button
-                    className="bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 hover:to-red-500 text-white font-bold py-2 px-4 rounded-md"
-                    style={{
-                      cursor:
-                        "pointer",
-                    }}
-                    type="submit"
-                    variant="success"
-                  >
-                    Submit
-                    Search
-                  </button>
-                </div>
-              </div>
-            </form>
+      <main name="NewRoutine"className="w-full mt-[150px]">
+        <div className="flex flex-col items-center mx-auto max-w-screen-lg ">
+          <div className="mt-10 ">
+            <Dropdown
+              onSelect={setSearchInput}
+            />
           </div>
 
-          <div className="grid  gap-4 text-neutral-600 dark:text-slate-300 grid-cols-1">
+          <div className="grid mt-[-200px] gap-4 text-neutral-600 dark:text-slate-300 grid-cols-1">
             {searchedExercises.map(
               (exercise) => {
                 return (
