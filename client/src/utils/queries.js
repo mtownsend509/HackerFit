@@ -6,7 +6,7 @@ export const QUERY_USER = gql`
       username
       savedRoutines {
         _id
-        name
+        Title
       }
     }
   }
@@ -16,7 +16,7 @@ export const QUERY_ROUTINES = gql`
   query getRoutines {
     savedRoutines {
       _id
-      name
+      Title
     }
   }
 `;
@@ -25,7 +25,7 @@ export const QUERY_SINGLE_ROUTINE = gql`
   query getSingleRountine($routineId: ID!) {
   routine(routineId: $routineId) {
     _id
-    name
+    Title
     exercises {
       _id
       name
