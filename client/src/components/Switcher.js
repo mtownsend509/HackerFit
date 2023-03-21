@@ -20,7 +20,8 @@ const Switcher = () => {
               checked={DarkMode}
               onChange={toggleDarkMode}
                     size={30}
-                    // style={{ onColor: 'orange' }}
+                    sunColor={'orange'}
+                   
                     
                     
           />

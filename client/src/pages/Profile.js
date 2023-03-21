@@ -25,10 +25,12 @@ const Profile = () => {
   return (
     <main
       name="Profile"
-      className="w-full mt-[150px]"
+     className="w-full mt-[150px] flex flex-row"
     >
-      <div className="flex flex-col items-center mx-auto max-w-screen-lg">
-        <div className="w-full p-4">
+      <div className="flex  items-center mx-auto max-w-screen-lg">
+
+        <div className="w-[50%]flex flex-col w-full p-4">
+          
           <Avatar
            
             alt="Profile Picture"
@@ -41,6 +43,8 @@ const Profile = () => {
           {/* <h4 className="text-black text-md p-4">
             Upload an image
           </h4> */}
+
+     
           <input
             className="p-4"
             type="file"
@@ -54,11 +58,14 @@ const Profile = () => {
             }
           >
             Submit
-          </button>
+            </button>
+            
         </div>
 
-        <div>
+         <div className="flex flex-col w-[50%] mt-[190px] items-center mx-auto max-w-screen-lg mb-4 border-2 border-red-400">
+          <div className="flex flex-row">
 
+          </div>
         </div>
 
       </div>
