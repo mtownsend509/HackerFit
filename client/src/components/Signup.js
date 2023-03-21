@@ -44,14 +44,13 @@ const Signup = () => {
       className=" w-full mt-[150px]">
          <div className="flex flex-1 flex-col items-center mx-auto max-w-screen-lg">
         <div className="w-full max-w-md mt-20">
-          <h4 className="bg-slate-400  dark:bg-slate-700 text-white text-md p-4 dark:rounded-t-md border border-slate-400  dark:border-slate-700 font-bold">
+          <h4 className="bg-slate-400  dark:bg-slate-600 text-white text-md p-6 dark:rounded-t-md border border-slate-400  dark:border-slate-600 font-bold">
            Sign up
           </h4>
           <div className="card-body inline">
             {data ? (
               <p>
-                Success! You may now head{' '}
-                <Link to="/">back to the homepage.</Link>
+                Success!
               </p>
             ) : (
                          <form
