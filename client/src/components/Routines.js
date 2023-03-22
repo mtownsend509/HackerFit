@@ -1,60 +1,50 @@
-import React, { useState } from "react";
+import React from "react";
 import { useQuery } from "@apollo/client";
-import { Link } from "react-router-dom";
 
-import {QUERY_USER} from "../utils/queries"
-import {QUERY_SINGLE_ROUTINE} from "../utils/queries";
+
+import { QUERY_ME } from "../utils/queries";
 
 const Routines = () => {
+  const { loading, data } = useQuery(QUERY_ME);
+
+  const user = data?.me;
 
 
-  // set state for reps?
-  // const [repState, setRepState] = useState("");
-    // set state for sets?
-  // const [setsState, setSetsState] = useState("")
-
-  const { routineData } = useQuery(QUERY_SINGLE_ROUTINE);
-  // i think as of right now this will just query the first routine listed in the database, not linked to the user, will have to test more
-  const { data } = useQuery(QUERY_USER)
-  // this also  i believe will only get us a user data
-  console.log("routines Comp line 20")
-  console.log(data)
-  let user;
-  if (data) {
-    user = data.user
+  if (!user) {
+    return <div>Please sign or log in to get started</div>;
   }
-  console.log(user)
-  // const { exercise } = useQuery()
+
+  if (loading) {
+    return <div>Loading Routines</div>;
+  }
+
+  if (user.savedRoutines.length === 0) {
+    return (
+      <>
+        <div style={{ marginTop: "250px" }}>
+          <p>GO make a New Routine to get started!!!!</p>
+        </div>
+      </>
+    );
+  }
+
   return (
-    <>
-      <div className="container my-1">
-
-
-        {user ? (
-          <>
-            {user.savedRoutines.map((routine) => (
-              <div key={routine._id} className="my-2">
-
-                <div className="flex-row">
-                  {routine.exercises.map(({ name, muscle, instructions }, index) => (
-                    // i think we need the key=index to make sure it lists all exercises in the users routine
-                    <div key={index} className="">
-                      <p>{name}</p>
-                      <p>{muscle}</p>
-                      <p>{instructions}</p>
-                      {/* kinda just a base set up until we can do more testing */}
-                      <div>
-
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </>
-        ) : null}
-      </div>
-    </>
+    <div className="container my-1">
+      {/* go ahead and write over this style tag to a tailwind CSS classname, make sure it wil push it down below the header */}
+      <h1 style={{ marginTop: "200px" }}>{user.username}</h1>
+      {user.savedRoutines.map((routine) => (
+        <div key={routine._id} className="my-2">
+          <div className="flex-row">
+            <div>Routine: {routine.Title}</div>
+            <ul>
+              {routine.exercises.map((exercise) => {
+                return <li>{exercise._id}</li>;
+              })}
+            </ul>
+          </div>
+        </div>
+      ))}
+    </div>
   );
-}
+};
 export default Routines;
