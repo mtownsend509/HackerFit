@@ -10,6 +10,10 @@ import {
   AiOutlineCaretUp,
 } from "react-icons/ai";
 
+import { useMutation } from '@apollo/client';
+import { ADD_ROUTINE } from '../utils/mutations';
+
+
 const fetch = require("node-fetch");
 const options = {
   method: "GET",
@@ -30,13 +34,13 @@ const searchAPIExercises = (
   );
 };
 
-const searchSingleAPIExercise =
-  (query) => {
-    return fetch(
-      `https://api.api-ninjas.com/v1/exercises?name=${query}`,
-      options
-    );
-  };
+// const searchSingleAPIExercise =
+//   (query) => {
+//     return fetch(
+//       `https://api.api-ninjas.com/v1/exercises?name=${query}`,
+//       options
+//     );
+//   };
 
 const NewRoutine = () => {
   // create state for holding returned google api data
@@ -44,6 +48,7 @@ const NewRoutine = () => {
     searchedExercises,
     setSearchedExercises,
   ] = useState([]);
+
   // create state for holding our search field data
   const [
     searchInput,
@@ -51,16 +56,30 @@ const NewRoutine = () => {
   ] = useState("");
 
   const [
+    addToWorkoutState,
+    setAddToWorkoutState,
+  ] = useState(
+    () =>
+      JSON.parse(
+        localStorage.getItem(
+          "exercise_list"
+        )
+      ) || []
+  );
+
+  const [
     setCount,
     setSetCount,
   ] = useState(0);
 
+  const [
+    repCount,
+    setRepCount,
+  ] = useState(0);
 
-    const [
-      repCount,
-      setRepCount,
-    ] = useState(0);
-  
+  const [routineName, setRoutineName] = useState('');
+
+
   // Function to increment count by 1
   const incrementRepCount =
     () => {
@@ -70,15 +89,15 @@ const NewRoutine = () => {
       );
     };
 
-    // Function to decrement count by 1
-    const decrementRepCount =
+  // Function to decrement count by 1
+  const decrementRepCount =
     () => {
       // Update state with incremented value
       setRepCount(
         repCount - 1
       );
-      };
-  
+    };
+
   // Function to increment count by 1
   const incrementSetCount =
     () => {
@@ -87,16 +106,16 @@ const NewRoutine = () => {
         setCount + 1
       );
     };
-  
-    // Function to increment count by 1
-    const decrementSetCount =
+
+  // Function to increment count by 1
+  const decrementSetCount =
     () => {
       // Update state with incremented value
       setSetCount(
         setCount - 1
       );
     };
-  
+
   const handleFormSubmit =
     async (event) => {
       // event.preventDefault();
@@ -160,13 +179,80 @@ const NewRoutine = () => {
     handleFormSubmit,
   ]);
 
+  // create function to handle saving a exercise to local storage
+  const addToWorkout = async (
+    event
+  ) => {
+    console.log(event.target);
+    console.log(
+      event.target.dataset
+    );
+    //object in array data
+    const {
+      name,
+      instructions,
+      muscle
+    } = event.target.dataset;
+    setAddToWorkoutState([
+      ...addToWorkoutState,
+      {
+        name,
+        instructions,
+        muscle,
+        reps: 0,
+        sets: 0,
+      },
+    ]);
+  };
+
+  const handleRepsAndSets = (
+    event
+  ) => {
+    console.log(
+      event.target.dataset
+    );
+    const {
+      index,
+      name,
+      count,
+    } = event.target.dataset;
+    const tempWorkout = [
+      ...addToWorkoutState,
+    ];
+    const selectedWorkout =
+      tempWorkout[index];
+    selectedWorkout[name] =
+      count == "increase"
+        ? selectedWorkout[
+            name
+          ] + 1
+        : selectedWorkout[
+            name
+          ] - 1;
+    tempWorkout[index] =
+      selectedWorkout;
+    setAddToWorkoutState(
+      tempWorkout
+    );
+  };
+
+  // create function to handle saving a toutine to our database
+  const addRoutine = () => {
+    console.log(
+      addToWorkoutState
+    );
+    console.log(routineName);
+  };
+
+  
+
   return (
     <>
       <main
         name="NewRoutine"
         className="w-full mt-[150px]  flex flex-row"
       >
-        <div className="w-[50%] flex flex-col items-center mx-auto max-w-screen-lg ">
+        <div className="w-[50%] flex flex-col items-center mx-auto sm:max-w-screen-lg max-w-screen-md ">
           <div className="mt-10 ">
             <Dropdown
               onSelect={
@@ -175,7 +261,7 @@ const NewRoutine = () => {
             />
           </div>
 
-          <div className="grid mt-[-200px] gap-4 text-neutral-600 dark:text-slate-300 grid-cols-1 mb-6">
+          <div className="grid mt-[-200px] gap-4 text-neutral-600 dark:text-slate-300 grid-cols-1 mb-10/">
             {searchedExercises.map(
               (exercise) => {
                 return (
@@ -212,6 +298,15 @@ const NewRoutine = () => {
                             id={
                               exercise.name
                             }
+                            data-name={
+                              exercise.name
+                            }
+                            data-muscle={
+                              exercise.muscle
+                            }
+                            data-instructions={
+                              exercise.instructions
+                            }
                             className="ml-3 mb-4 bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 hover:to-red-500 text-white font-bold py-2 px-4 rounded-md"
                             style={{
                               cursor:
@@ -220,7 +315,7 @@ const NewRoutine = () => {
                             type="submit"
                             variant="success"
                             onClick={
-                              searchSingleAPIExercise
+                              addToWorkout
                             }
                           >
                             Add
@@ -243,27 +338,30 @@ const NewRoutine = () => {
               New routine:
             </p>
             <input
-              className="w-[300px] p-2 font-bold block text-md text-gray-400 bg-transparent border-b-2 border-gray-300 appearance-none dark:text-gray-200 dark:border-gray-300 focus:border-gray-400 dark:focus:border-gray-500 focus:outline-none focus:ring-0"
+              className="w-[30%] p-2 font-bold block text-md text-gray-400 bg-transparent border-b-2 border-gray-300 appearance-none dark:text-gray-200 dark:border-gray-300 focus:border-gray-400 dark:focus:border-gray-500 focus:outline-none focus:ring-0"
               placeholder="Type something"
               required
               name="routine_name"
               id="routine-name"
               type="text"
-              // value={
-              //   formState.email
-              // }
-              // onChange={
-              //   handleChange
-              // }
+              value={
+                routineName
+              }
+              onChange={
+                (event) => setRoutineName(event.target.value)
+              }
             />
             <button
-              className="ml-3 bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 hover:to-red-500 text-white font-bold py-3 px-4 rounded-md"
+              className="ml-5 bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 hover:to-red-500 text-white font-bold py-3 px-4 rounded-md"
               style={{
                 cursor:
                   "pointer",
               }}
               type="submit"
               variant="success"
+              onClick={
+                addRoutine
+              }
             >
               Save routine
             </button>
@@ -272,10 +370,16 @@ const NewRoutine = () => {
           <div className="grid grid-cols-1 gap-4 mb-4 w-full text-neutral-600 dark:text-slate-300">
             <div>
               <div className="px-2 py-3">
+                <>
+                  {console.log(
+                    addToWorkoutState
+                  )}{" "}
+                </>
                 <div className="mt-5">
-                  {searchedExercises.map(
+                  {addToWorkoutState.map(
                     (
-                      exercise
+                      exercise,
+                      index
                     ) => {
                       return (
                         <div
@@ -299,6 +403,13 @@ const NewRoutine = () => {
                                     exercise.instructions
                                   }
                                 </p>
+                                <p className="px-2 py-3 m-2 font-bold">
+                                  Muscle
+                                  Group:{" "}
+                                  {
+                                    exercise.muscle
+                                  }
+                                </p>
 
                                 <div className="flex flex-row mb-4">
                                   <div
@@ -311,27 +422,50 @@ const NewRoutine = () => {
 
                                     <div className="flex flex-col">
                                       <button
-                                        onClick={
-                                          incrementRepCount
+                                        data-index={
+                                          index
                                         }
+                                        data-name={
+                                          "reps"
+                                        }
+                                        data-count={
+                                          "increase"
+                                        }
+                                        onClick={
+                                          // incrementRepCount
+                                          handleRepsAndSets
+                                        }
+                                        // in state there is are mutliple workouts in an array so button needs to fins specific exercise in array to decrease or increase number
                                         className=" ml-3 mb-[-5px]"
                                       >
-                                        <AiOutlineCaretUp />
+                                        +
+                                        {/* <AiOutlineCaretUp /> */}
                                       </button>
 
                                       <button
+                                        data-index={
+                                          index
+                                        }
+                                        data-name={
+                                          "reps"
+                                        }
+                                        data-count={
+                                          "decrease"
+                                        }
                                         onClick={
-                                          decrementRepCount
+                                          // decrementRepCount
+                                          handleRepsAndSets
                                         }
                                         className="ml-3"
                                       >
-                                        <AiOutlineCaretDown />
+                                        -
+                                        {/* <AiOutlineCaretDown /> */}
                                       </button>
                                     </div>
 
                                     <div className="ml-3">
                                       {
-                                        repCount
+                                        exercise.reps
                                       }
                                     </div>
                                   </div>
@@ -346,30 +480,51 @@ const NewRoutine = () => {
 
                                     <div className="flex flex-col">
                                       <button
+                                        data-index={
+                                          index
+                                        }
+                                        data-name={
+                                          "sets"
+                                        }
+                                        data-count={
+                                          "increase"
+                                        }
                                         onClick={
-                                          incrementSetCount
+                                          // incrementSetCount
+                                          handleRepsAndSets
                                         }
                                         className=" ml-3 mb-[-5px]"
                                       >
-                                        <AiOutlineCaretUp />
+                                        +
+                                        {/* <AiOutlineCaretUp /> */}
                                       </button>
 
                                       <button
+                                        data-index={
+                                          index
+                                        }
+                                        data-name={
+                                          "sets"
+                                        }
+                                        data-count={
+                                          "decrease"
+                                        }
                                         onClick={
-                                          decrementSetCount
+                                          // decrementSetCount
+                                          handleRepsAndSets
                                         }
                                         className="ml-3"
                                       >
-                                        <AiOutlineCaretDown />
+                                        -
+                                        {/* <AiOutlineCaretDown /> */}
                                       </button>
                                     </div>
 
                                     <div className="ml-3">
                                       {
-                                        setCount
+                                        exercise.sets
                                       }
                                     </div>
-
                                   </div>
                                 </div>
                               </div>
