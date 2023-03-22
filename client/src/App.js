@@ -49,11 +49,12 @@ function App() {
           <Header />
           <div className="flex-1 bg-white dark:bg-gradient-to-b from-slate-900 via-slate-800 to-slate-700 ">
             <Routes>
-              <Route path="/RoutineLog" element={<RoutineLog />} />
+            <Route path="/" element={<Profile />} />
+              <Route path="/Profile" element={<Profile />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/login" element={<Login />} />
               <Route path="/NewRoutine" element={<NewRoutine />} />
-              <Route path="/Profile" element={<Profile />} />
+              <Route path="/RoutineLog" element={<RoutineLog />} />
             </Routes>
             </div>
           <Footer />

@@ -6,7 +6,7 @@ export const QUERY_USER = gql`
       username
       savedRoutines {
         _id
-        name
+        Title
       }
     }
   }
@@ -16,7 +16,7 @@ export const QUERY_ROUTINES = gql`
   query getRoutines {
     savedRoutines {
       _id
-      name
+      Title
     }
   }
 `;
@@ -25,7 +25,7 @@ export const QUERY_SINGLE_ROUTINE = gql`
   query getSingleRountine($routineId: ID!) {
   routine(routineId: $routineId) {
     _id
-    name
+    Title
     exercises {
       _id
       name
@@ -37,18 +37,25 @@ export const QUERY_SINGLE_ROUTINE = gql`
 `;
 
 
-// export const QUERY_ME = gql`
-//   query me {
-//     me {
-//       _id
-//       username
-//       email
-//       routines {
-//         _id
-//         routineText
-//         routineAuthor
-//         createdAt
-//       }
-//     }
-//   }
-// `;
+export const QUERY_ME = gql`
+query me {
+  me {
+    _id
+    username
+    email
+    savedRoutines {
+      Title
+      _id
+      muscleGroups
+      exercises {
+        _id
+        name
+        muscle
+        instructions
+        reps
+        sets
+      }
+    }
+  }
+}
+`;

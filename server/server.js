@@ -9,7 +9,7 @@ const {
 } = require("@apollo/server/plugin/drainHttpServer");
 const http = require("http");
 
-const path = require('path');
+// const path = require('path');
 
 const { authMiddleware } = require("./utils/auth");
 
@@ -25,8 +25,8 @@ const httpServer = http.createServer(app);
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context: authMiddleware,
-  // plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
+  // context: authMiddleware,
+  plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
 });
 
 app.use(express.urlencoded({ extended: false }));
