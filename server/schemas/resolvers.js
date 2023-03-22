@@ -21,10 +21,10 @@ const resolvers = {
         },
         me: async (parent, args, context) => {
           console.log("contextuser", context.user)
-          // if (context.user) {
-            return Users.findOne({ _id: "641a2743c22cf93f9d029640" }).populate("savedRoutines");
-          // }
-          // throw new AuthenticationError('You need to be logged in!');
+          if (context.user) {
+            return Users.findOne({ _id: context.user._id }).populate("savedRoutines");;
+          }
+          throw new AuthenticationError('You need to be logged in!');
         },
     },
 
