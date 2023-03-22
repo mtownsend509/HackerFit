@@ -87,8 +87,7 @@ const Profile = () => {
         <>
           <div className="mx-auto max-w-screen-lg flex flex-row w-full mt-10">
             <div className="flex flex-col p-4 mt-5 w-[30%] mr-5">
-              
-                       
+                 
             <Avatar
                 className="mt-5"
                 alt="Profile Picture"
@@ -172,7 +171,7 @@ const Profile = () => {
 
             </div>
 
-            <div className="flex flex-col mt-10 w-[70%] text-slate-500 dark:text-white">
+            <div className="flex flex-col mt-10 w-[70%] mb-10 text-slate-500 dark:text-white">
               <div className="flex flex-row text-4xl">
                 <h1 className="mr-1">
                   {" "}

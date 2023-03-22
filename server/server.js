@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const express = require("express");
 // Import the ApolloServer class
 const { ApolloServer } = require("@apollo/server");
@@ -31,11 +33,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../build/public")));
+  app.use(express.static(path.join(__dirname, "../client/build")));
 }
 
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "../client/public/index.html"));
+  res.sendFile(path.join(__dirname, "../client/build/index.html"));
 });
 
 // Create a new instance of an Apollo server with the GraphQL schema

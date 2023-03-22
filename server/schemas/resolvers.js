@@ -60,7 +60,9 @@ const resolvers = {
         createRoutine: async (parent, { Title, muscleGroups, exercises }
           , context
           )  => {
+
             if (context.user) {
+
                 const routine = await Routines.create( { Title, muscleGroups, exercises });
                 const updatedUser = await Users.findOneAndUpdate(
                 { _id: context.user._id},
