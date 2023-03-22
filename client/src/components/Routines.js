@@ -7,7 +7,7 @@ const Routines = () => {
   const { loading, data } = useQuery(QUERY_ME);
 
   const user = data?.me;
-
+console.log(user)
   if (!user) {
     return <div>Please sign or log in to get started</div>;
   }
@@ -38,7 +38,7 @@ const Routines = () => {
               {routine.exercises.map((exercise) => {
                 return (
                   <ul>
-                  <li>{exercise._id}</li>
+                  {/* <li>{exercise._id}</li> */}
                   <li>{exercise.name}</li>
                   <li>{exercise.muscle}</li>
                   <li>{exercise.instructions}</li>
