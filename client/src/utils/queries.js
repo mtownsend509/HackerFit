@@ -37,18 +37,25 @@ export const QUERY_SINGLE_ROUTINE = gql`
 `;
 
 
-// export const QUERY_ME = gql`
-//   query me {
-//     me {
-//       _id
-//       username
-//       email
-//       routines {
-//         _id
-//         routineText
-//         routineAuthor
-//         createdAt
-//       }
-//     }
-//   }
-// `;
+export const QUERY_ME = gql`
+query me {
+  me {
+    _id
+    username
+    email
+    savedRoutines {
+      Title
+      _id
+      muscleGroups
+      exercises {
+        _id
+        name
+        muscle
+        instructions
+        reps
+        sets
+      }
+    }
+  }
+}
+`;

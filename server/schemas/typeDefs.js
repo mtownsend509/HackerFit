@@ -32,6 +32,7 @@ const typeDefs = `#graphql
         exercises(muscle: String!): Exercise
         routines(username: String!): [Routine]
         routine(routineId: ID!): Routine
+        me: User
     }
 
     type Mutation {
