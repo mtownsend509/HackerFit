@@ -60,52 +60,66 @@ const Routines = () => {
 
   return (
     <div className="container mt-[150px]">
-      <div className="w-full flex flex-col mx-auto max-w-screen-lg">
-        {/* go ahead and write over this style tag to a tailwind CSS classname, make sure it wil push it down below the header */}
-        <h1 className="flex justify-start text-4xl mb-10 mt-10 dark:text-slate-300 text-slate-400 ml-5">
-          Hello {user.username}! Here is a list of your favorite workouts
-        </h1>
-        <div className="mt-5">
-          {user.savedRoutines.map((routine) => (
-            <div key={routine._id} className="my-2">
-              <div className="border-b-2 border-b-gray-400">
-                <div className="flex">
-                  <div className="flex flex-row ml-5">
-                    <div className="text-lg dark:text-slate-300 text-gray-500">
-                      Routine Name:{" "}
-                    </div>
-                    <div className="m-3 text-lg dark:text-slate-300 text-gray-500 ">
-                      {" "}
-                      {routine.Title}
-                    </div>
-                    
-                    <Button
-                      variant="contained"
-                      color="secondary"
-                      size="small"
-                      startIcon={<DeleteIcon />}
-                      onClick={() => handleDeleteRoutine(routine._id)}
-                    >
-                      Delete
-                    </Button>
+    <div className="w-full flex flex-col mx-auto max-w-screen-lg">
+      {/* go ahead and write over this style tag to a tailwind CSS classname, make sure it wil push it down below the header */}
+      <h1 className="flex justify-start text-4xl mb-10 mt-10 dark:text-slate-300 text-slate-400 ml-5">
+        Hello {user.username}! Here is a list of your favorite workouts
+      </h1>
+      <div className="mt-5">
+        {user.savedRoutines.map((routine) => (
+          <div key={routine._id} className="my-2">
+          
+
+            <div className="shadow shadow-gray-600 dark:shadow-slate-200 flex flex-col rounded-md justify-between border-gray-400 p-5">
+
+                <div className="flex flex-row justify-between">
+
+                <div className="flex flex-row">
+                  <div className="text-lg dark:text-slate-300 text-gray-500">
+                    Routine Name:{" "}
                   </div>
-                  {routine.exercises.map((exercise) => {
-                    return (
-                      <ul>
-                        {/* <li>{exercise._id}</li> */}
-                        <li>{exercise.name}</li>
-                        <li>{exercise.muscle}</li>
-                        <li>{exercise.instructions}</li>
-                      </ul>
-                    );
-                  })}
+                  <div className="text-lg dark:text-slate-300 text-gray-500 ml-3 justify-start">
+                    {" "}
+                    {routine.Title}
+                  </div>
+                  </div>
+          
+                  
+                  <div>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    size="medium"
+                    startIcon={<DeleteIcon />}
+                    onClick={() => handleDeleteRoutine(routine._id)}
+                  
+                  >
+                    Delete
+                  </Button>
                 </div>
+                
+                  </div>
+
+             <div className="flex w-full justify-start">
+                {routine.exercises.map((exercise) => {
+                  return (
+                    <ul>
+                      {/* <li>{exercise._id}</li> */}
+                      <li>{exercise.name}</li>
+                      <li>{exercise.muscle}</li>
+                      <li>{exercise.instructions}</li>
+                    </ul>
+                  );
+                })}
               </div>
-            </div>
-          ))}
-        </div>
+              
+              </div>
+          
+          </div>
+        ))}
       </div>
     </div>
+  </div>
   );
 };
 export default Routines;
