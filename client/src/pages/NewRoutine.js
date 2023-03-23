@@ -14,6 +14,7 @@ import {
 import { useMutation } from '@apollo/client';
 import { ADD_ROUTINE } from '../utils/mutations';
 import { ADD_EXERCISE } from '../utils/mutations';
+import { DELETE_EXERCISE } from '../utils/mutations';
 
 const fetch = require("node-fetch");
 const options = {
@@ -218,6 +219,23 @@ const NewRoutine = () => {
 
   };
 
+  const[delExercise, {newerror,newdata}] = useMutation(DELETE_EXERCISE);
+  const deleteExercise = async (event) => {
+    console.log(event.target.parentElement.children[0].innerHTML.slice(15));
+    const exerciseName = event.target.parentElement.children[0].innerHTML.slice(15);
+    const title = window.localStorage.getItem("routinename");
+    const exerciseObject = {exerciseName: exerciseName, routineName: routineName}
+    console.log(exerciseObject)
+    try{
+      const {data} = await delExercise({
+        variables: {...exerciseObject}
+      });
+      window.alert(`It's deleted believe me plz`)
+    } catch (e) {
+      console.error("shit gdi", e.networkError.result.errors)
+    } 
+  }
+
   const handleRepsAndSets = (
     event
   ) => {
@@ -366,13 +384,20 @@ const NewRoutine = () => {
                           <div>
                             <div className="border-b-2 border-b-gray-400">
                               <div>
-                                <p className="px-2 py-3 m-2 font-bold">
+                                <div className="flex grid-calls plural-2">
+                                  <p className="px-2 py-3 m-2 font-bold">
                                   Exercise
                                   Name:{" "}
                                   {
                                     exercise.name
                                   }
-                                </p>
+                                  </p>
+                                  <button
+                                  onClick={
+                                          // decrementRepCount
+                                          deleteExercise
+                                        }>X</button>
+                                </div>
                                 <p className="px-2 py-3 m-2">
                                   Instructions:{" "}
                                   {

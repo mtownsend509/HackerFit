@@ -43,7 +43,7 @@ const typeDefs = `#graphql
         addExercise(title: String!, reps: Int, sets: Int, name: String!, muscle: String!, instructions: String!): Exercise
         updateExercise(routineId: String!, exerciseId: ID!, reps: Int, sets: Int, name: String, muscle: String, instructions: String): Exercise
         deleteRoutine(routineId: ID!): Routine
-        deleteExercise(exerciseId: ID!, routineId: ID!): Exercise
+        deleteExercise(exerciseName: String!, routineName: String!): Exercise
         
         
     }
