@@ -6,20 +6,35 @@ import { ADD_ROUTINE } from '../utils/mutations';
 
 import Auth from '../utils/auth';
 
-const CreateRoutine = () => {
+const CreateRoutine = (props) => {
   const [formState, setFormState] = useState({
     Title: '',
   });
+  const [exerciseState, setExerciseState] = useState({
+    ...props
+  })
+
+  // setExerciseState({
+  //   ...exerciseState,
+  //   [name]: props.name,
+// });
+  console.log(exerciseState)
+  console.log("line19", props) //we are getting the props (current selected workouts)
   const [addRoutine, { error, data }] = useMutation(ADD_ROUTINE);
 
   const handleChange = (event) => {
     event.preventDefault()
     const { name, value } = event.target;
 
+
+
     setFormState({
       ...formState,
       [name]: value,
     });
+
+    
+    
   };
 
   const handleFormSubmit = async (event) => {
@@ -27,11 +42,17 @@ const CreateRoutine = () => {
     console.log("formState", formState);
 
     try {
+      // props.onSubmit({
+      //   name: exerciseState.name,
+      //   muscle: exerciseState.muscle,
+      //   instructions: exerciseState.instructions
+      // })
       const { data } = await addRoutine({
-        variables: {...formState} ,
+        variables: {...formState, ...exerciseState} ,
       });
       console.log("HIPPO LINE 33", data)
-      Auth.login(data.addUser.token);
+      // console.log(data.addUser.token)
+      // Auth.login(data.addUser.token);
     } catch (e) {
       console.error("LINE 36 ERROR", e);
     }
@@ -49,10 +70,16 @@ const CreateRoutine = () => {
     value={
       formState.Title
     }
+    data-name={props.name}
+    data-muscle={props.muscle}
+    data-instructions={props.instructions}
     onChange={
+      
       handleChange
     }
+    
   />
+  {console.log(props.addToWorkoutstate)}
   <button
     className=""
     style={{

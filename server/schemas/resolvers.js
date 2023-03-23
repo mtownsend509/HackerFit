@@ -62,21 +62,22 @@ const resolvers = {
           )  => {
 
             if (context.user) {
-
+              const token= context.user.token
+              console.log(token)
                 const routine = await Routines.create( { Title });
                 const updatedUser = await Users.findOneAndUpdate(
                 { _id: context.user._id},
                 { $addToSet: { savedRoutines: routine._id}}
             );
             return routine,
-            updatedUser
+            updatedUser, token
             }
             throw new AuthenticationError("You need to be logged in!");
         },
         addExercise: async (parent, { routineId, name, muscle, instructions }, 
-          // context
+          context
           ) => {
-            // if (context.user) {
+            if (context.user) {
               return Routines.findOneAndUpdate(
                 { _id: routineId },
                 {
@@ -89,9 +90,9 @@ const resolvers = {
                   runValidators: true,
                 }
               );
-            },
-          //   throw new AuthenticationError("You need to be logged in!");
-          // },
+            }
+            throw new AuthenticationError("You need to be logged in!");
+          },
         updateExercise: async (parent, { routineId, exerciseId, reps, sets, name, muscle, instructions}
           // , context
           ) => {

@@ -20,8 +20,7 @@ const options = {
   method: "GET",
   headers: {
     "X-Api-Key":
-      process.env
-        .REACT_APP_API_KEY,
+    "CO5pQFAJ2g/BR7scxc0R+A==dssO1NxeDORs1duO",
     // 'X-RapidAPI-Host': 'exercises-by-api-ninjas.p.rapidapi.com'
   },
 };
@@ -334,7 +333,8 @@ const NewRoutine = () => {
         </div>
 
         <div className="flex flex-col w-[45%] mt-[50px] items-center mx-auto max-w-screen-lg mb-4 mr-5">
-          <CreateRoutine />
+          <CreateRoutine 
+            addToWorkoutState={addToWorkoutState}/>
           {/* <div className="flex flex-row">
             <p className="font-bold px-4 py-3 block text-md text-gray-400 dark:text-gray-200">
               New routine:
@@ -373,9 +373,10 @@ const NewRoutine = () => {
             <div>
               <div className="px-2 py-3">
                 <>
-                  {console.log(
+                  {/* {console.log(
                     addToWorkoutState
-                  )}{" "}
+                  )} */}
+                  {" "}
                 </>
                 <div className="mt-5">
                   {addToWorkoutState.map(
