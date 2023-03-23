@@ -1,8 +1,10 @@
 import React from "react";
-import { Container, Card, Button, Row, Col } from "react-bootstrap";
+// import { Container, Card, Button, Row, Col } from "react-bootstrap";
+import Button from "@mui/material/Button";
+import DeleteIcon from '@mui/icons-material/Delete';
+
 import { useQuery, useMutation, useApolloClient } from "@apollo/client";
 import Auth from "../utils/auth";
-
 
 import { QUERY_ME } from "../utils/queries";
 import { DELETE_ROUTINE } from "../utils/mutations";
@@ -11,43 +13,51 @@ const Routines = () => {
   const { loading, data } = useQuery(QUERY_ME);
   const [deleteRoutine] = useMutation(DELETE_ROUTINE);
 
+
+  const client = useApolloClient(); 
+
   const user = data?.me;
-console.log(user)
-const handleDeleteRoutine = async (routineId) => {
-  const token = Auth.loggedIn() ? Auth.getToken() : null;
 
-  if (!token) {
-    return false;
-  }
+  console.log(user);
 
-  try {
-    const { data } = await deleteRoutine({
-      variables: { routineId },
-    });
-    console.log(data)
+  const handleDeleteRoutine = async (routineId) => {
+    const token = Auth.loggedIn() ? Auth.getToken() : null;
 
-    if (data?.deleteRoutine) {
-      const updatedUserData = { ...user };
-      updatedUserData.savedRoutines = updatedUserData.savedRoutines.filter(
-        (savedRoutines) => savedRoutines.routineId !== routineId
-      );
-
-      // client.writeQuery({
-      //   query: QUERY_ME,
-      //   data: { me: updatedUserData },
-      // });
+    if (!token) {
+      return false;
     }
-  } catch (err) {
-    console.error(err.networkError.result.errors);
+
+    try {
+      const { data } = await deleteRoutine({
+        variables: { routineId },
+      });
+      console.log(data);
+
+      if (data?.deleteRoutine) {
+        const updatedUserData = { ...user };
+        updatedUserData.savedRoutines = updatedUserData.savedRoutines.filter(
+          (savedRoutines) => savedRoutines.routineId !== routineId
+        );
+        window.alert(`It's deleted believe me plz`)
+
+
+        client.writeQuery({
+          query: QUERY_ME,
+          data: { me: updatedUserData },
+        });
+      }
+    } catch (err) {
+      console.error(err.networkError.result.errors);
+    }
+  };
+
+  if (loading) {
+    return <h2>LOADING...</h2>;
+
   }
-};
-
-if (loading) {
-  return <h2>LOADING...</h2>;
-}
 
 
-  
+
   return (
     <div className="container mt-[150px]">
       <div className="w-full flex flex-col mx-auto max-w-screen-lg">
@@ -62,14 +72,21 @@ if (loading) {
                 <div className="flex">
                   <div className="flex flex-row ml-5">
                     <div className="text-lg dark:text-slate-300 text-gray-500">
-                      Routine name:{" "}
+                      Routine Name:{" "}
                     </div>
-                    <div className="ml-5 text-lg dark:text-slate-300 text-gray-500 ">
+                    <div className="m-3 text-lg dark:text-slate-300 text-gray-500 ">
                       {" "}
                       {routine.Title}
                     </div>
-                    <Button className='btn-block btn-danger' onClick={() => handleDeleteRoutine(routine._id)}>
-                      Delete this Routine!
+                    
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      size="small"
+                      startIcon={<DeleteIcon />}
+                      onClick={() => handleDeleteRoutine(routine._id)}
+                    >
+                      Delete
                     </Button>
                   </div>
                   {routine.exercises.map((exercise) => {
