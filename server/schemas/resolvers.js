@@ -57,18 +57,19 @@ const resolvers = {
             const token= signToken(user);
             return { token, user};
         },
-        createRoutine: async (parent, { Title, muscleGroups, exercises }
+        createRoutine: async (parent, { Title }
           , context
           )  => {
 
             if (context.user) {
 
-                const routine = await Routines.create( { Title, muscleGroups, exercises });
+                const routine = await Routines.create( { Title });
                 const updatedUser = await Users.findOneAndUpdate(
                 { _id: context.user._id},
                 { $addToSet: { savedRoutines: routine._id}}
             );
-            return routine, updatedUser
+            return routine,
+            updatedUser
             }
             throw new AuthenticationError("You need to be logged in!");
         },
