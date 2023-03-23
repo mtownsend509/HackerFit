@@ -251,10 +251,10 @@ const NewRoutine = () => {
     <>
       <main
         name="NewRoutine"
-        className="w-full mt-[150px]  flex flex-row"
+        className="w-full mt-[150px] flex flex-col sm:flex-row justify-around"
       >
         <div className="w-[50%] flex flex-col items-center mx-auto sm:max-w-screen-lg max-w-screen-md ">
-          <div className="mt-10 ">
+          <div className="mt-10 ml-10">
             <Dropdown
               onSelect={
                 setSearchInput
@@ -335,41 +335,8 @@ const NewRoutine = () => {
 
         <div className="flex flex-col w-[45%] mt-[50px] items-center mx-auto max-w-screen-lg mb-4 mr-5">
           <CreateRoutine />
-          {/* <div className="flex flex-row">
-            <p className="font-bold px-4 py-3 block text-md text-gray-400 dark:text-gray-200">
-              New routine:
-            </p>
-            <input
-              className="w-[30%] p-2 font-bold block text-md text-gray-400 bg-transparent border-b-2 border-gray-300 appearance-none dark:text-gray-200 dark:border-gray-300 focus:border-gray-400 dark:focus:border-gray-500 focus:outline-none focus:ring-0"
-              placeholder="Type something"
-              required
-              name="routine_name"
-              id="routine-name"
-              type="text"
-              value={
-                routineName
-              }
-              onChange={
-                (event) => setRoutineName(event.target.value)
-              }
-            />
-            <button
-              className="ml-5 bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 hover:to-red-500 text-white font-bold py-3 px-4 rounded-md"
-              style={{
-                cursor:
-                  "pointer",
-              }}
-              type="submit"
-              variant="success"
-              onClick={
-                addRoutine
-              }
-            >
-              Save routine
-            </button> */}
-          </div>
-
-          <div className="grid grid-cols-1 gap-4 mb-4 w-full text-neutral-600 dark:text-slate-300">
+         
+          <div className="ml-[-200px] sm:ml-0 sm:mr-10 grid grid-cols-1 gap-4 mb-4 w-full text-neutral-600 dark:text-slate-300">
             <div>
               <div className="px-2 py-3">
                 <>
@@ -422,7 +389,7 @@ const NewRoutine = () => {
                                       Reps:
                                     </p>
 
-                                    <div className="flex flex-col">
+                                    <div className="flex flex-row">
                                       <button
                                         data-index={
                                           index
@@ -438,7 +405,7 @@ const NewRoutine = () => {
                                           handleRepsAndSets
                                         }
                                         // in state there is are mutliple workouts in an array so button needs to fins specific exercise in array to decrease or increase number
-                                        className=" ml-3 mb-[-5px]"
+                                        className=" ml-5"
                                       >
                                         +
                                         {/* <AiOutlineCaretUp /> */}
@@ -458,14 +425,14 @@ const NewRoutine = () => {
                                           // decrementRepCount
                                           handleRepsAndSets
                                         }
-                                        className="ml-3"
+                                        className=" ml-5"
                                       >
                                         -
                                         {/* <AiOutlineCaretDown /> */}
                                       </button>
                                     </div>
 
-                                    <div className="ml-3">
+                                    <div className="ml-5">
                                       {
                                         exercise.reps
                                       }
@@ -480,7 +447,7 @@ const NewRoutine = () => {
                                       Sets:
                                     </p>
 
-                                    <div className="flex flex-col">
+                                    <div className="flex flex-row">
                                       <button
                                         data-index={
                                           index
@@ -495,7 +462,7 @@ const NewRoutine = () => {
                                           // incrementSetCount
                                           handleRepsAndSets
                                         }
-                                        className=" ml-3 mb-[-5px]"
+                                        className=" ml-5 "
                                       >
                                         +
                                         {/* <AiOutlineCaretUp /> */}
@@ -515,14 +482,14 @@ const NewRoutine = () => {
                                           // decrementSetCount
                                           handleRepsAndSets
                                         }
-                                        className="ml-3"
+                                        className=" ml-5"
                                       >
                                         -
                                         {/* <AiOutlineCaretDown /> */}
                                       </button>
                                     </div>
 
-                                    <div className="ml-3">
+                                    <div className="ml-5">
                                       {
                                         exercise.sets
                                       }
@@ -539,6 +506,7 @@ const NewRoutine = () => {
                 </div>
               </div>
             </div>
+          </div>
           </div>
         {/* </div> */}
       </main>

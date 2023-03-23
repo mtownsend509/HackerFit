@@ -36,6 +36,24 @@ class AuthService {
     localStorage.removeItem('id_token');
     window.location.reload();
   }
+  
+
+  getCurrentUserId() {
+    const token = this.getToken();
+    const decoded = decode(token);
+    return decoded.userId;
+  }
+
+  saveProfilePicture(imageData) {
+    const userId = this.getCurrentUserId();
+    localStorage.setItem(`profilePicture_${userId}`, imageData);
+  }
+
+  getProfilePicture() {
+    const userId = this.getCurrentUserId();
+    return localStorage.getItem(`profilePicture_${userId}`);
+  }
+
 }
 
 export default new AuthService();

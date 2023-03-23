@@ -1,5 +1,6 @@
 import { gql } from "@apollo/client";
 
+
 export const LOGIN_USER = gql`
   mutation login($username: String!, $password: String!) {
     login(username: $username, password: $password) {
@@ -116,3 +117,11 @@ export const DELETE_EXERCISE = gql`
     }
   }
 `;
+
+export const SAVE_TEXTAREA = gql`
+  mutation SaveTextarea($RPEInput: String!, $HRVInput: String!, $BMIInput: String!) {
+    saveTextarea(RPEInput: $RPEInput, HRVInput: $HRVInput, BMIInput: $BMIInput)
+  }
+`;
+
+
