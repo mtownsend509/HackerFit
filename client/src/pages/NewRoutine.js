@@ -173,7 +173,7 @@ const NewRoutine = () => {
       });
       
       console.log("Matt", addToWorkoutState[1].name)
-      window.alert(`It's deleted believe me plz`)
+      window.alert(`Workout Deleted`)
       function test (exercise) {
         return exercise.name !== exerciseName;
       }
@@ -244,9 +244,20 @@ const NewRoutine = () => {
                         <div>
                           <div className="border-b-2 border-b-gray-400">
                             <div>
-                              <p className="px-2 py-3 m-2 font-bold">
-                                Exercise Name: {exercise.name}
-                              </p>
+                            <div className="flex grid-calls plural-2">
+                                  <p className="px-2 py-3 m-2 font-bold">
+                                  Exercise
+                                  Name:{" "}
+                                  {
+                                    exercise.name
+                                  }
+                                  </p>
+                                  <button
+                                  onClick={
+                                          // decrementRepCount
+                                          deleteExercise
+                                        }>X</button>
+                                </div>
                               <p className="px-2 py-3 m-2">
                                 Instructions: {exercise.instructions}
                               </p>
