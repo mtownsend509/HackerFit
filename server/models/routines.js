@@ -11,7 +11,7 @@ const routineSchema = new Schema(
         },
         muscleGroups: {
             type: String,
-            required: true,
+
         },
         exercises: 
              [ {
@@ -23,7 +23,7 @@ const routineSchema = new Schema(
                 },
                 name: {
                     type: String,
-                    required: true,
+
                 },
                 muscle: {
                     type: String,

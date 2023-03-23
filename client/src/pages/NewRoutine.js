@@ -4,6 +4,7 @@ import React, {
 } from "react";
 
 import Dropdown from "../components/Dropdown";
+import CreateRoutine from "../components/CreateRoutine";
 
 import {
   AiOutlineCaretDown,
@@ -333,7 +334,8 @@ const NewRoutine = () => {
         </div>
 
         <div className="flex flex-col w-[45%] mt-[50px] items-center mx-auto max-w-screen-lg mb-4 mr-5">
-          <div className="flex flex-row">
+          <CreateRoutine />
+          {/* <div className="flex flex-row">
             <p className="font-bold px-4 py-3 block text-md text-gray-400 dark:text-gray-200">
               New routine:
             </p>
@@ -364,7 +366,7 @@ const NewRoutine = () => {
               }
             >
               Save routine
-            </button>
+            </button> */}
           </div>
 
           <div className="grid grid-cols-1 gap-4 mb-4 w-full text-neutral-600 dark:text-slate-300">
@@ -538,7 +540,7 @@ const NewRoutine = () => {
               </div>
             </div>
           </div>
-        </div>
+        {/* </div> */}
       </main>
     </>
   );

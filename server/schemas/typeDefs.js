@@ -10,7 +10,7 @@ const typeDefs = `#graphql
         _id: ID!
         Title: String
         muscleGroups: String
-        exercises: [Exercise]!
+        exercises: [Exercise]
     }
 
     type Exercise {
@@ -38,7 +38,7 @@ const typeDefs = `#graphql
     type Mutation {
         login(username: String!, password: String!): Auth
         addUser(username: String!, email: String!, password: String!): Auth
-        createRoutine(Title: String!, muscleGroups: String, exercises: [String]): User
+        createRoutine(Title: String!): Routine
         updateRoutine(routineId: ID!, Title: String!, muscleGroups: String!): Routine
         addExercise(routineId: ID!, reps: Int, sets: Int, name: String!, muscle: String!, instructions: String!): Routine
         updateExercise(routineId: ID!, exerciseId: ID!, reps: Int, sets: Int, name: String, muscle: String, instructions: String): Exercise
