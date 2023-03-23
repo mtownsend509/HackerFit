@@ -133,16 +133,16 @@ const resolvers = {
             },
           //   throw new AuthenticationError("You need to be logged in!");
           // },
-        deleteExercise: async (parent, { exerciseId, routineId }
+        deleteExercise: async (parent, { exerciseName, routineName }
           // , context
           ) => {
             // if (context.user) {
               return Routines.findOneAndUpdate(
-                { _id: routineId },
+                { Title: routineName },
                 {
                   $pull: {
                     exercises: {
-                      _id: exerciseId
+                      name: exerciseName
                     },
                   },
                 },
@@ -153,11 +153,9 @@ const resolvers = {
           // },
 
         
-        updateRoutine: async (parent, { routineId ,Title, muscleGroups,}) => {
+        updateRoutine: async (parent, { Title }) => {
             const updatedRoutine = await Routines.findOneAndUpdate(
-                { _id: routineId },
-                {Title: Title,
-                muscleGroups: muscleGroups},
+                {Title: Title},
                 {new: true }
             );
             return updatedRoutine;

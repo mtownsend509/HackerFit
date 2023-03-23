@@ -3,11 +3,16 @@ import React, { useEffect, useState } from "react";
 import Dropdown from "../components/Dropdown";
 import CreateRoutine from "../components/CreateRoutine";
 
-import { AiOutlineCaretDown, AiOutlineCaretUp } from "react-icons/ai";
-import { Route } from "react-router-dom"
-import { useMutation } from "@apollo/client";
-import { ADD_ROUTINE } from "../utils/mutations";
-import { ADD_EXERCISE } from "../utils/mutations";
+
+import {
+  AiOutlineCaretDown,
+  AiOutlineCaretUp,
+} from "react-icons/ai";
+
+import { useMutation } from '@apollo/client';
+import { ADD_ROUTINE } from '../utils/mutations';
+import { ADD_EXERCISE } from '../utils/mutations';
+import { DELETE_EXERCISE } from '../utils/mutations';
 
 const fetch = require("node-fetch");
 const options = {
@@ -114,51 +119,88 @@ const NewRoutine = () => {
     handleFormSubmit();
   }, [searchInput, handleFormSubmit]);
 
-  const [addExercise, { error, data }] = useMutation(ADD_EXERCISE);
+
+  const[addExercise, {error,data}] = useMutation(ADD_EXERCISE);
   // create function to handle saving a exercise to local storage
-  const addToWorkout = async (event) => {
+  const addToWorkout = async (
+    event
+  ) => {
     event.preventDefault();
     //object in array data
     const title = window.localStorage.getItem("routinename");
     console.log(title);
     const name = event.target.dataset.name;
     const instructions = event.target.dataset.instructions;
-    const muscle = event.target.dataset.muscle;
-    const newObject = {
-      title: title,
-      name: name,
-      instructions: instructions,
-      muscle: muscle,
-    };
-    console.log("lookhere", newObject);
+
+    const muscle = event.target.dataset.muscle
+    const newObject = {title: title, name:name, instructions: instructions, muscle: muscle}
+    console.log("lookhere",newObject)
     // const {
     //   // name,
     //   instructions,
     //   muscle
     // } = event.target.dataset;
-    try {
-      const { data } = await addExercise({
-        variables: { ...newObject },
+
+    try{
+      const {data} = await addExercise({
+        variables: {...newObject}
       });
       console.log(data);
-      setAddToWorkoutState([
-        ...addToWorkoutState,
-        {
-          name,
-          instructions,
-          muscle,
-        },
-      ]);
+      window.alert("exercise added")
+          setAddToWorkoutState([
+      ...addToWorkoutState,
+      {
+        name,
+        instructions,
+        muscle,
+      },
+    ]);
     } catch (e) {
-      console.error("shit gdi", e.networkError.result.errors);
+      console.error("shit gdi", e.networkError.result.errors)
     }
+
   };
 
-  const handleRepsAndSets = (event) => {
-    console.log(event.target.dataset);
-    const { index, name, count } = event.target.dataset;
-    const tempWorkout = [...addToWorkoutState];
-    const selectedWorkout = tempWorkout[index];
+
+  const[delExercise, {newerror,newdata}] = useMutation(DELETE_EXERCISE);
+  const deleteExercise = async (event) => {
+    const exerciseName = event.target.parentElement.children[0].innerHTML.slice(15);
+    const title = window.localStorage.getItem("routinename");
+    const exerciseObject = {exerciseName: exerciseName, routineName: title}
+    try{
+      const {data} = await delExercise({
+        variables: {...exerciseObject}
+      });
+      
+      console.log("Matt", addToWorkoutState[1].name)
+      window.alert(`It's deleted believe me plz`)
+      function test (exercise) {
+        return exercise.name !== exerciseName;
+      }
+      setAddToWorkoutState(
+        addToWorkoutState.filter(test)
+      );
+    } catch (e) {
+      console.error("shit gdi", e.networkError.result.errors)
+    } 
+  }
+
+  const handleRepsAndSets = (
+    event
+  ) => {
+    console.log(
+      event.target.dataset
+    );
+    const {
+      index,
+      name,
+      count,
+    } = event.target.dataset;
+    const tempWorkout = [
+      ...addToWorkoutState,
+    ];
+    const selectedWorkout =
+      tempWorkout[index];
     selectedWorkout[name] =
       count == "increase"
         ? selectedWorkout[name] + 1
@@ -168,15 +210,23 @@ const NewRoutine = () => {
   };
 
   // create function to handle saving a toutine to our database
+
+
+
+  
+
+
   return (
     <>
       <main
         name="NewRoutine"
         className="w-full mt-[150px] flex flex-col sm:flex-row justify-around"
       >
+
         {/* {beginning of CreateRoutines stuff} */}
         <div className="flex flex-col w-[45%] mt-[50px] items-center mx-auto max-w-screen-lg mb-4 mr-5">
           <CreateRoutine />
+
 
           <div className="ml-[-200px] sm:ml-0 sm:mr-10 grid grid-cols-1 gap-4 mb-4 w-full text-neutral-600 dark:text-slate-300">
             <div>
@@ -187,6 +237,7 @@ const NewRoutine = () => {
                   )} */}{" "}
                 </>
                 <div className="mt-5">
+
                   {addToWorkoutState.map((exercise, index) => {
                     return (
                       <div key={exercise.name}>
@@ -215,6 +266,7 @@ const NewRoutine = () => {
                                       onClick={
                                         // incrementRepCount
                                         handleRepsAndSets
+
                                       }
                                       // in state there is are mutliple workouts in an array so button needs to fins specific exercise in array to decrease or increase number
                                       className=" ml-5"
@@ -235,6 +287,7 @@ const NewRoutine = () => {
                                       -{/* <AiOutlineCaretDown /> */}
                                     </button>
                                   </div>
+
 
                                   <div className="ml-5">{exercise.reps}</div>
                                 </div>
@@ -263,6 +316,7 @@ const NewRoutine = () => {
                                       onClick={
                                         // decrementSetCount
                                         handleRepsAndSets
+
                                       }
                                       className=" ml-5"
                                     >
@@ -332,7 +386,6 @@ const NewRoutine = () => {
           </div>
           {/* {end of exercise dropdown stuff} */}
         </div>
-
         {/* </div> */}
       </main>
     </>

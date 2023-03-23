@@ -39,11 +39,11 @@ const typeDefs = `#graphql
         login(username: String!, password: String!): Auth
         addUser(username: String!, email: String!, password: String!): Auth
         createRoutine(Title: String!): Routine
-        updateRoutine(routineId: ID!, Title: String!, muscleGroups: String!): Routine
+        updateRoutine(Title: String!): Routine
         addExercise(title: String!, reps: Int, sets: Int, name: String!, muscle: String!, instructions: String!): Exercise
         updateExercise(routineId: String!, exerciseId: ID!, reps: Int, sets: Int, name: String, muscle: String, instructions: String): Exercise
         deleteRoutine(routineId: ID!): Routine
-        deleteExercise(exerciseId: ID!, routineId: ID!): Exercise
+        deleteExercise(exerciseName: String!, routineName: String!): Exercise
         
         
     }

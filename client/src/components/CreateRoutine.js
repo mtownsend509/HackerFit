@@ -44,11 +44,13 @@ const [exerciseState, setExerciseState] = useState({
       console.log("HIPPO LINE 33", data)
       console.log(formState.Title)
       window.localStorage.setItem('routinename', formState.Title)
-      Auth.login(data.addUser.token);
+      window.alert("routine created")
+      // Auth.login(data.addUser.token);
     } catch (e) {
       console.error("LINE 36 ERROR", e);
     }
   };
+
 
   if( window.localStorage.getItem("routinename") === null ) {
     return (
@@ -87,6 +89,7 @@ const [exerciseState, setExerciseState] = useState({
     }
   >
     Save Routine Name
+
   </button>
   </div>
   );}

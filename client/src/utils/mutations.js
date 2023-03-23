@@ -92,11 +92,9 @@ export const UPDATE_EXERCISE = gql`
 `;
 
 export const UPDATE_ROUTINE = gql`
-  mutation updateRoutine($routineId: ID!, $title: String!, $muscleGroups: String!) {
-  updateRoutine(routineId: $routineId, Title: $title, muscleGroups: $muscleGroups) {
+  mutation updateRoutine($title: String!) {
+  updateRoutine(Title: $title) {
     Title
-    _id
-    muscleGroups
   }
 }
 `;
@@ -110,8 +108,8 @@ export const DELETE_ROUTINE = gql`
 `;
 
 export const DELETE_EXERCISE = gql`
-  mutation deleteExercise($exerciseId: ID!, $routineId: ID!) {
-    deleteExercise(exerciseId: $exerciseId, routineId: $routineId) {
+  mutation deleteExercise($exerciseName: String!, $routineName: String!) {
+    deleteExercise(exerciseName: $exerciseName, routineName: $routineName) {
       _id
     }
   }
