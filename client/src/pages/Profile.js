@@ -1,82 +1,100 @@
 import React, {
   useState,
+  useEffect,
 } from "react";
-import Avatar from "@mui/material/Avatar";
+
 import { Link } from "react-router-dom";
-
-// import { useQuery } from "@apollo/client";
-// import {
-//   Navigate,
-//   useParams,
-// } from "react-router-dom";
-
-// import { QUERY_USER } from "../utils/queries";
 import Auth from "../utils/auth";
+import ImageUpload from "../components/ImageUpload";
 
 const Profile = () => {
+  const [inputs, setInputs] =
+    useState({
+      RPEInput: "",
+      HRVInput: "",
+      BMIInput: "",
+    });
+  const [notes, setNotes] =
+    useState("");
   const [image, setImage] =
     useState(null);
+  const [url, setURL] =
+    useState(null);
 
-  const handleImageChange = (
-    e
-  ) => {
-    if (e.target.files[0]) {
-      setImage(
-        e.target.files[0]
+  useEffect(() => {
+    const savedInputs =
+      JSON.parse(
+        localStorage.getItem(
+          "inputs"
+        )
       );
+    if (savedInputs) {
+      setInputs(savedInputs);
     }
+
+    const savedNotes =
+      localStorage.getItem(
+        "notes"
+      );
+    if (savedNotes) {
+      setNotes(savedNotes);
+    }
+  }, []);
+
+  const handleInputChange = (
+    event
+  ) => {
+    setInputs(
+      (prevState) => ({
+        ...prevState,
+        [event.target.name]:
+          event.target.value,
+      })
+    );
   };
-  console.log(image);
 
-  const handleSubmit = () => {
-    /* const imageRef = ref(storage, "image"); ? */
+  const handleNotesChange = (
+    event
+  ) => {
+    setNotes(
+      event.target.value
+    );
   };
 
-  // const {
-  //   username: userParam,
-  // } = useParams();
-  // const { loading, data } =
-  //   useQuery(
-  //     userParam
-  //       ? QUERY_USER
-  //       : {
-  //           variables: {
-  //             username:
-  //               userParam,
-  //           },
-  //         }
-  //   );
+  const handleSubmit = (
+    event
+  ) => {
+    event.preventDefault();
+    localStorage.setItem(
+      "inputs",
+      JSON.stringify(inputs)
+    );
+  };
 
-  // const user =
-  //   data?.me ||
-  //   data?.user ||
-  //   {};
-  // // navigate to personal profile page if username is yours
-  // if (
-  //   Auth.loggedIn() &&
-  //   Auth.getProfile().data
-  //     .username === userParam
-  // ) {
-  //   return (
-  //     <Navigate to="/Profile" />
-  //   );
-  // }
+  const handleNotesSubmit = (
+    event
+  ) => {
+    event.preventDefault();
+    localStorage.setItem(
+      "notes",
+      notes
+    );
+  };
 
-  // if (loading) {
-  //   return (
-  //     <div>Loading...</div>
-  //   );
-  // }
-
-  // if (!user?.username) {
-  //   return (
-  //     <h4>
-  //       Use the navigation
-  //       links above to sign up
-  //       or log in!
-  //     </h4>
-  //   );
-  // }
+  const handleDelete = () => {
+    localStorage.removeItem(
+      "inputs"
+    );
+    localStorage.removeItem(
+      "notes"
+    );
+    setInputs({
+      RPEInput: "",
+      HRVInput: "",
+      BMIInput: "",
+    });
+    setNotes("");
+  };
 
   return (
     <main
@@ -85,156 +103,173 @@ const Profile = () => {
     >
       {Auth.loggedIn() ? (
         <>
-          <div className="mx-auto max-w-screen-lg flex flex-row w-full mt-10">
-            <div className="flex flex-col p-4 mt-5 w-[30%] mr-5">
-                 
-            <Avatar
-                className="mt-5"
-                alt="Profile Picture"
-                src="/static/images/avatar/1.jpg" /* {url} */
-                sx={{
-                  width: 200,
-                  height: 200,
-                }}
-              />
-
-              <input
-                className="p-4"
-                type="file"
-                onChange={
-                  handleImageChange
+          <div className="mx-auto max-w-screen-lg flex flex-col w-full mt-10">
+            <div className="flex justify-center text-4xl mb-20 mt-10 text-slate-400">
+              <h1 className="mr-1">
+                {" "}
+                Hello{" "}
+              </h1>
+              <h1 className="mr-1">
+                {
+                  Auth.getProfile()
+                    .data
+                    .username
                 }
-              />
-
-              <button
-                onClick={
-                  handleSubmit
-                }
-                className="ml-4 w-[100px] text-lg hover:underline text-white bg-gradient-to-br from-teal-300 via-teal-400 to-teal-600 py-3 px-4 rounded-md"
-              >
-                Upload
-              </button>
-
-              <div className=" w-full border-t mt-10">
-              <form className="px-2 py-2 m-2 text-slate-500 dark:text-white">
-                <div className="flex">
-                  <p className="mb-3 mr-2 font-brand text-4xl mt-5">
-                    Stats
-                  </p>
-                </div>
-
-                <input
-                  type="submit"
-                  value="RPE:"
-                  className="hover:cursor-pointer"
-                />
-                <textarea
-                  id="text"
-                  name="text"
-                  multiline
-                  rows="1"
-                  type="text"
-                  className="w-full text-gray-500 dark:text-white bg-inherit focus:outline-none focus:ring-0"
-                  placeholder="Rate of Perceived Exertion (6-20)"
-                ></textarea>
-
-                <input
-                  type="submit"
-                  value="HRV:"
-                  className="hover:cursor-pointer"
-                />
-                <textarea
-                  id="text"
-                  name="text"
-                  multiline
-                  rows="1"
-                  type="text"
-                  className="w-full text-gray-500 dark:text-white bg-inherit focus:outline-none focus:ring-0"
-                  placeholder="Heart Rate Variability (high-low)"
-                ></textarea>
-                <input
-                  type="submit"
-                  value="BMI:"
-                  className="hover:cursor-pointer"
-                />
-                <textarea
-                  id="text"
-                  name="text"
-                  multiline
-                  rows="1"
-                  type="text"
-                  className="w-full text-gray-500 dark:text-white bg-inherit focus:outline-none focus:ring-0"
-                  placeholder="Body Mass Index"
-                ></textarea>
-              </form>
-              </div>
-
+                ! What's on
+                your mind
+                today?
+              </h1>
             </div>
 
-            <div className="flex flex-col mt-10 w-[70%] mb-10 text-slate-500 dark:text-white">
-              <div className="flex flex-row text-4xl">
-                <h1 className="mr-1">
-                  {" "}
-                  Hello
-                </h1>
-                <h1 className="mr-1">
-                  {
-                    Auth.getProfile()
-                      .data
-                      .username
-                  }
-                  ! What's on
-                  your mind
-                  today?
-                </h1>
-              </div>
+            <div className="flex flex-row mb-10">
+              <ImageUpload />
 
-              <div className="mt-10 h-full w-full shadow shadow-gray-600 dark:shadow-slate-100 rounded-lg mr-4">
-                <form className="px-2 py-3 m-2 font-bold text-slate-500 dark:text-white">
+              <div className="ml-5 h-full w-full shadow shadow-gray-600 dark:shadow-slate-100 rounded-lg mr-4">
+                <form
+                  className="px-2 py-3 m-3 font-bold text-slate-500 dark:text-white"
+                  onSubmit={
+                    handleNotesSubmit
+                  }
+                >
                   <p className="mb-3 font-brand text-4xl">
-                    Goals
+                    Notes
                   </p>
                   <textarea
+                    value={
+                      notes
+                    }
+                    onChange={
+                      handleNotesChange
+                    }
                     id="text"
                     name="text"
-                    multiline
                     rows="9"
                     type="text"
                     className="w-full text-gray-500 dark:text-white bg-inherit focus:outline-none focus:ring-0"
                     placeholder="Type something"
                   ></textarea>
-                  {/* <input
-              type="submit"
-              value="Save"
-              className="hover:cursor-pointer"
-            /> */}
+                  <div className="flex flex-row justify-between">
+                    <input
+                      type="submit"
+                      value="Save"
+                      className="hover:cursor-pointer flex justify-end items-end font-bold hover:underline hover:text-slate-600 ml-5"
+                    />
+                    <input
+                      type="submit"
+                      value="Delete"
+                      onClick={
+                        handleDelete
+                      }
+                      className="hover:cursor-pointer flex justify-end items-end font-bold hover:underline hover:text-slate-600 mr-5"
+                    />
+                  </div>
                 </form>
               </div>
 
-              <div className="mt-4 h-full w-full shadow shadow-gray-600 dark:shadow-slate-100 rounded-lg mr-4">
-              <form className="px-2 py-3 m-3 font-bold text-slate-500 dark:text-white">
-                <p className="mb-3 font-brand text-4xl">
-                  Notes
-                </p>
-                <textarea
-                  id="text"
-                  name="text"
-                  multiline
-                  rows="9"
-                  type="text"
-                  className="w-full text-gray-500 dark:text-white bg-inherit focus:outline-none focus:ring-0"
-                  placeholder="Type something"
-                ></textarea>
-                {/* <input
-              type="submit"
-              value="Save"
-              className="hover:cursor-pointer"
-            /> */}
-              </form>
-              </div>
-              
-            </div>
+              <div className="w-full shadow shadow-gray-600 dark:shadow-slate-100 rounded-lg">
+                <form
+                  onSubmit={
+                    handleSubmit
+                  }
+                  className="px-2 py-2 m-2 text-slate-500 dark:text-white"
+                >
+                  <div className="flex">
+                    <p className="mb-3 mr-2 font-brand text-4xl mt-5">
+                      {" "}
+                      Stats{" "}
+                    </p>
+                  </div>
 
+                  <h3>
+                    Enter
+                    today's
+                    RPE
+                  </h3>
+
+                  <textarea
+                    value={
+                      inputs.RPEInput
+                    }
+                    onChange={
+                      handleInputChange
+                    }
+                    id="RPEInput"
+                    name="RPEInput"
+                    rows="1"
+                    type="text"
+                    className="w-full text-gray-500 dark:text-white bg-inherit focus:outline-none focus:ring-0"
+                    placeholder="   Rate of
+                    Perceived
+                    Exertion (6 - 20)"
+                  ></textarea>
+
+                  <br />
+
+                  <h3>
+                    Enter
+                    today's
+                    HRV
+                  </h3>
+                  <textarea
+                    value={
+                      inputs.HRVInput
+                    }
+                    onChange={
+                      handleInputChange
+                    }
+                    id="HRVInput"
+                    name="HRVInput"
+                    rows="1"
+                    type="text"
+                    className="w-full text-gray-500 dark:text-white bg-inherit focus:outline-none focus:ring-0"
+                    placeholder=" Heart Rate
+                    Variability (High - Low)"
+                  ></textarea>
+
+                  <br />
+
+                  <h3>
+                    Enter your
+                    current
+                    BMI
+                  </h3>
+                  <textarea
+                    value={
+                      inputs.BMIInput
+                    }
+                    onChange={
+                      handleInputChange
+                    }
+                    id="BMIInput"
+                    name="BMIInput"
+                    rows="1"
+                    type="text"
+                    className="w-full text-gray-500 dark:text-white bg-inherit focus:outline-none focus:ring-0"
+                    placeholder="Body Mass Index"
+                  ></textarea>
+
+                  <br />
+                  <br />
+                  <br />
+
+                  <div className="flex flex-row justify-between">
+                    <input
+                      type="submit"
+                      value="Save"
+                      className="hover:cursor-pointer flex justify-end items-end font-bold hover:underline hover:text-slate-600 ml-5"
+                    />
+                    <input
+                      type="submit"
+                      value="Delete"
+                      onClick={
+                        handleDelete
+                      }
+                      className="hover:cursor-pointer flex justify-end items-end font-bold hover:underline hover:text-slate-600 mr-5"
+                    />
+                  </div>
+                </form>
+              </div>
+            </div>
           </div>
         </>
       ) : (
