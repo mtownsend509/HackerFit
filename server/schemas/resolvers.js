@@ -21,10 +21,10 @@ const resolvers = {
         },
         me: async (parent, args, context) => {
           console.log("contextuser", context.user)
-          // if (context.user) {
-            return Users.findOne({ _id: "641a2743c22cf93f9d029640" }).populate("savedRoutines");
-          // }
-          // throw new AuthenticationError('You need to be logged in!');
+          if (context.user) {
+            return Users.findOne({ _id: context.user._id }).populate("savedRoutines");;
+          }
+          throw new AuthenticationError('You need to be logged in!');
         },
     },
 
@@ -57,18 +57,19 @@ const resolvers = {
             const token= signToken(user);
             return { token, user};
         },
-        createRoutine: async (parent, { Title, muscleGroups, exercises }
+        createRoutine: async (parent, { Title }
           , context
           )  => {
 
             if (context.user) {
 
-                const routine = await Routines.create( { Title, muscleGroups, exercises });
+                const routine = await Routines.create( { Title });
                 const updatedUser = await Users.findOneAndUpdate(
                 { _id: context.user._id},
                 { $addToSet: { savedRoutines: routine._id}}
             );
-            return routine, updatedUser
+            return routine,
+            updatedUser
             }
             throw new AuthenticationError("You need to be logged in!");
         },
@@ -152,13 +153,13 @@ const resolvers = {
 
         
         updateRoutine: async (parent, { routineId ,Title, muscleGroups,}) => {
-            const newRoutine = await Routines.findOneAndUpdate(
+            const updatedRoutine = await Routines.findOneAndUpdate(
                 { _id: routineId },
                 {Title: Title,
-                muscleGroups: muscleGroups,},
+                muscleGroups: muscleGroups},
                 {new: true }
             );
-            return newRoutine;
+            return updatedRoutine;
         },
 
     }

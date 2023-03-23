@@ -1,6 +1,11 @@
 [
     {
+
+        "Title": "Arm Day",
+        "muscleGroups": "Biceps",
+=======
         "title": "Arm Day",
+
         "exercises": []
     }
 ]

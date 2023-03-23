@@ -1,15 +1,13 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
 
-
 import { QUERY_ME } from "../utils/queries";
 
 const Routines = () => {
   const { loading, data } = useQuery(QUERY_ME);
 
   const user = data?.me;
-
-
+console.log(user)
   if (!user) {
     return <div>Please sign or log in to get started</div>;
   }
@@ -36,11 +34,18 @@ const Routines = () => {
         <div key={routine._id} className="my-2">
           <div className="flex-row">
             <div>Routine: {routine.Title}</div>
-            <ul>
+            
               {routine.exercises.map((exercise) => {
-                return <li>{exercise._id}</li>;
+                return (
+                  <ul>
+                  {/* <li>{exercise._id}</li> */}
+                  <li>{exercise.name}</li>
+                  <li>{exercise.muscle}</li>
+                  <li>{exercise.instructions}</li>
+                  </ul>
+                );
               })}
-            </ul>
+            
           </div>
         </div>
       ))}

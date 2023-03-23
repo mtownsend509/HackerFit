@@ -9,6 +9,7 @@ const RoutineLog = () => {
 
   return (
     <Routines />
+
   )
 }
 

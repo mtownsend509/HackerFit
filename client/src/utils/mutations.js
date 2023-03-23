@@ -25,8 +25,8 @@ export const ADD_USER = gql`
 `;
 
 export const ADD_ROUTINE = gql`
-  mutation createRoutine($title: String!, $muscleGroups: String, $exercises: [String]) {
-    createRoutine(Title: $title, muscleGroups: $muscleGroups, exercises: $exercises) {
+  mutation createRoutine($Title: String!) {
+    createRoutine(Title: $Title) {
       Title
       _id
       exercises {
@@ -89,6 +89,16 @@ export const UPDATE_EXERCISE = gql`
       sets
     }
   }
+`;
+
+export const UPDATE_ROUTINE = gql`
+  mutation updateRoutine($routineId: ID!, $title: String!, $muscleGroups: String!) {
+  updateRoutine(routineId: $routineId, Title: $title, muscleGroups: $muscleGroups) {
+    Title
+    _id
+    muscleGroups
+  }
+}
 `;
 
 export const DELETE_ROUTINE = gql`
