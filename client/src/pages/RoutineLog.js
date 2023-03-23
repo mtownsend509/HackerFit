@@ -7,6 +7,9 @@ const RoutineLog = () => {
   const { loading, data } = useQuery(QUERY_ROUTINES);
   const routines = data?.savedRoutines || [];
 
+  if(window.localStorage.getItem("routinename")) {
+    window.localStorage.removeItem("routinename")
+  }
   return (
     <Routines />
 
