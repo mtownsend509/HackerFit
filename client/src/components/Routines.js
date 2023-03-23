@@ -13,6 +13,8 @@ const Routines = () => {
 
   const user = data?.me;
 console.log(user)
+
+
 const handleDeleteRoutine = async (routineId) => {
   const token = Auth.loggedIn() ? Auth.getToken() : null;
 
@@ -37,7 +39,6 @@ const handleDeleteRoutine = async (routineId) => {
       //   data: { me: updatedUserData },
       // });
     };
-    this.forceUpdate();
   } catch (err) {
     console.error(err.networkError.result.errors);
   }
