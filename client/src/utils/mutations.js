@@ -91,6 +91,16 @@ export const UPDATE_EXERCISE = gql`
   }
 `;
 
+export const UPDATE_ROUTINE = gql`
+  mutation updateRoutine($routineId: ID!, $title: String!, $muscleGroups: String!) {
+  updateRoutine(routineId: $routineId, Title: $title, muscleGroups: $muscleGroups) {
+    Title
+    _id
+    muscleGroups
+  }
+}
+`;
+
 export const DELETE_ROUTINE = gql`
   mutation deleteRoutine($routineId: ID!) {
     deleteRoutine(routineId: $routineId) {
