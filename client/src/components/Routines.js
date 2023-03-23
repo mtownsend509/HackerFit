@@ -17,6 +17,7 @@ const Routines = () => {
   const client = useApolloClient(); 
 
   const user = data?.me;
+
   console.log(user);
 
   const handleDeleteRoutine = async (routineId) => {
@@ -39,6 +40,7 @@ const Routines = () => {
         );
         window.alert(`It's deleted believe me plz`)
 
+
         client.writeQuery({
           query: QUERY_ME,
           data: { me: updatedUserData },
@@ -51,6 +53,7 @@ const Routines = () => {
 
   if (loading) {
     return <h2>LOADING...</h2>;
+
   }
 
 

@@ -33,7 +33,8 @@ const CreateRoutine = () => {
       console.log("HIPPO LINE 33", data)
       console.log(formState.Title)
       window.localStorage.setItem('routinename', formState.Title)
-      Auth.login(data.addUser.token);
+      window.alert("routine created")
+      // Auth.login(data.addUser.token);
     } catch (e) {
       console.error("LINE 36 ERROR", e);
     }
@@ -70,7 +71,7 @@ const CreateRoutine = () => {
       handleFormSubmit
     }
   >
-    Save routine
+    Create routine
   </button>
   </div>
   );

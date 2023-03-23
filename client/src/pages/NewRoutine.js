@@ -205,6 +205,7 @@ const NewRoutine = () => {
         variables: {...newObject}
       });
       console.log(data);
+      window.alert("exercise added")
           setAddToWorkoutState([
       ...addToWorkoutState,
       {
@@ -219,18 +220,25 @@ const NewRoutine = () => {
 
   };
 
+
   const[delExercise, {newerror,newdata}] = useMutation(DELETE_EXERCISE);
   const deleteExercise = async (event) => {
-    console.log(event.target.parentElement.children[0].innerHTML.slice(15));
     const exerciseName = event.target.parentElement.children[0].innerHTML.slice(15);
     const title = window.localStorage.getItem("routinename");
     const exerciseObject = {exerciseName: exerciseName, routineName: title}
-    console.log("exerciseObject", exerciseObject)
     try{
       const {data} = await delExercise({
         variables: {...exerciseObject}
       });
+      
+      console.log("Matt", addToWorkoutState[1].name)
       window.alert(`It's deleted believe me plz`)
+      function test (exercise) {
+        return exercise.name !== exerciseName;
+      }
+      setAddToWorkoutState(
+        addToWorkoutState.filter(test)
+      );
     } catch (e) {
       console.error("shit gdi", e.networkError.result.errors)
     } 
