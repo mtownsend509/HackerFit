@@ -51,8 +51,9 @@ const CreateRoutine = (props) => {
         variables: {...formState, ...exerciseState} ,
       });
       console.log("HIPPO LINE 33", data)
-      // console.log(data.addUser.token)
-      // Auth.login(data.addUser.token);
+      console.log(formState.Title)
+      window.localStorage.setItem('routinename', formState.Title)
+      Auth.login(data.addUser.token);
     } catch (e) {
       console.error("LINE 36 ERROR", e);
     }

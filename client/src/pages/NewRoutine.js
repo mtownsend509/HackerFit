@@ -13,7 +13,7 @@ import {
 
 import { useMutation } from '@apollo/client';
 import { ADD_ROUTINE } from '../utils/mutations';
-
+import { ADD_EXERCISE } from '../utils/mutations';
 
 const fetch = require("node-fetch");
 const options = {
@@ -179,30 +179,42 @@ const NewRoutine = () => {
     handleFormSubmit,
   ]);
 
+  const[addExercise, {error,data}] = useMutation(ADD_EXERCISE);
   // create function to handle saving a exercise to local storage
   const addToWorkout = async (
     event
   ) => {
-    console.log(event.target);
-    console.log(
-      event.target.dataset
-    );
+    event.preventDefault();
     //object in array data
-    const {
-      name,
-      instructions,
-      muscle
-    } = event.target.dataset;
-    setAddToWorkoutState([
+    const title = window.localStorage.getItem("routinename");
+    console.log(title);
+    const name = event.target.dataset.name;
+    const instructions = event.target.dataset.instructions;
+    const muscle = event.target.dataset.muscle
+    const newObject = {title: title, name:name, instructions: instructions, muscle: muscle}
+    console.log("lookhere",newObject)
+    // const {
+    //   // name,
+    //   instructions,
+    //   muscle
+    // } = event.target.dataset;
+    try{
+      const {data} = await addExercise({
+        variables: {...newObject}
+      });
+      console.log(data);
+          setAddToWorkoutState([
       ...addToWorkoutState,
       {
         name,
         instructions,
         muscle,
-        reps: 0,
-        sets: 0,
       },
     ]);
+    } catch (e) {
+      console.error("shit gdi", e.networkError.result.errors)
+    }
+
   };
 
   const handleRepsAndSets = (
@@ -237,12 +249,7 @@ const NewRoutine = () => {
   };
 
   // create function to handle saving a toutine to our database
-  const addRoutine = () => {
-    console.log(
-      addToWorkoutState
-    );
-    console.log(routineName);
-  };
+
 
   
 
