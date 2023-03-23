@@ -51,6 +51,7 @@ const Login = (props) => {
         );
       } catch (e) {
         console.error(e);
+        window.alert("Wrong Password! Try Again")
       }
 
       // clear form values
