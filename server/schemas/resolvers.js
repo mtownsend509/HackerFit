@@ -152,13 +152,13 @@ const resolvers = {
 
         
         updateRoutine: async (parent, { routineId ,Title, muscleGroups,}) => {
-            const newRoutine = await Routines.findOneAndUpdate(
+            const updatedRoutine = await Routines.findOneAndUpdate(
                 { _id: routineId },
                 {Title: Title,
-                muscleGroups: muscleGroups,},
+                muscleGroups: muscleGroups},
                 {new: true }
             );
-            return newRoutine;
+            return updatedRoutine;
         },
 
     }
