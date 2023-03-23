@@ -75,7 +75,7 @@ const resolvers = {
             throw new AuthenticationError("You need to be logged in!");
         },
         addExercise: async (parent, { title, name, muscle, instructions }, 
-          // context
+          context
           ) => {
             if (context.user) {
               return Routines.findOneAndUpdate(
@@ -91,7 +91,7 @@ const resolvers = {
                 }
               );
             }
-            throw new AuthenticationError("You need to be logged in!");
+          //   throw new AuthenticationError("You need to be logged in!");
           },
         updateExercise: async (parent, { routineId, exerciseId, reps, sets, name, muscle, instructions}
           // , context
