@@ -1,5 +1,6 @@
 import { gql } from "@apollo/client";
 
+
 export const LOGIN_USER = gql`
   mutation login($username: String!, $password: String!) {
     login(username: $username, password: $password) {
@@ -41,23 +42,22 @@ export const ADD_ROUTINE = gql`
 
 export const ADD_EXERCISE = gql`
   mutation addExercise(
-    $routineId: ID!
+    $title: String!
     $name: String!
     $muscle: String!
     $instructions: String!
   ) {
     addExercise(
-      routineId: $routineId
+      title: $title
       name: $name
       muscle: $muscle
       instructions: $instructions
     ) {
-      _id
-      exercises {
         _id
+        name
         instructions
         muscle
-      }
+
     }
   }
 `;
@@ -110,9 +110,17 @@ export const DELETE_ROUTINE = gql`
 `;
 
 export const DELETE_EXERCISE = gql`
-  mutation deleteExercise($exerciseId: ID!, $routineId: ID!) {
-    deleteExercise(exerciseId: $exerciseId, routineId: $routineId) {
+  mutation deleteExercise($exerciseName: String!, $routineName: String!) {
+    deleteExercise(exerciseName: $exerciseName, routineName: $routineName) {
       _id
     }
   }
 `;
+
+export const SAVE_TEXTAREA = gql`
+  mutation SaveTextarea($RPEInput: String!, $HRVInput: String!, $BMIInput: String!) {
+    saveTextarea(RPEInput: $RPEInput, HRVInput: $HRVInput, BMIInput: $BMIInput)
+  }
+`;
+
+

@@ -13,7 +13,8 @@ import {
 
 import { useMutation } from '@apollo/client';
 import { ADD_ROUTINE } from '../utils/mutations';
-
+import { ADD_EXERCISE } from '../utils/mutations';
+import { DELETE_EXERCISE } from '../utils/mutations';
 
 const fetch = require("node-fetch");
 const options = {
@@ -180,31 +181,60 @@ const NewRoutine = () => {
     handleFormSubmit,
   ]);
 
+  const[addExercise, {error,data}] = useMutation(ADD_EXERCISE);
   // create function to handle saving a exercise to local storage
   const addToWorkout = async (
     event
   ) => {
-    console.log(event.target);
-    console.log(
-      event.target.dataset
-    );
+    event.preventDefault();
     //object in array data
-    const {
-      name,
-      instructions,
-      muscle
-    } = event.target.dataset;
-    setAddToWorkoutState([
+    const title = window.localStorage.getItem("routinename");
+    console.log(title);
+    const name = event.target.dataset.name;
+    const instructions = event.target.dataset.instructions;
+    const muscle = event.target.dataset.muscle
+    const newObject = {title: title, name:name, instructions: instructions, muscle: muscle}
+    console.log("lookhere",newObject)
+    // const {
+    //   // name,
+    //   instructions,
+    //   muscle
+    // } = event.target.dataset;
+    try{
+      const {data} = await addExercise({
+        variables: {...newObject}
+      });
+      console.log(data);
+          setAddToWorkoutState([
       ...addToWorkoutState,
       {
         name,
         instructions,
         muscle,
-        reps: 0,
-        sets: 0,
       },
     ]);
+    } catch (e) {
+      console.error("shit gdi", e.networkError.result.errors)
+    }
+
   };
+
+  const[delExercise, {newerror,newdata}] = useMutation(DELETE_EXERCISE);
+  const deleteExercise = async (event) => {
+    console.log(event.target.parentElement.children[0].innerHTML.slice(15));
+    const exerciseName = event.target.parentElement.children[0].innerHTML.slice(15);
+    const title = window.localStorage.getItem("routinename");
+    const exerciseObject = {exerciseName: exerciseName, routineName: routineName}
+    console.log(exerciseObject)
+    try{
+      const {data} = await delExercise({
+        variables: {...exerciseObject}
+      });
+      window.alert(`It's deleted believe me plz`)
+    } catch (e) {
+      console.error("shit gdi", e.networkError.result.errors)
+    } 
+  }
 
   const handleRepsAndSets = (
     event
@@ -238,12 +268,7 @@ const NewRoutine = () => {
   };
 
   // create function to handle saving a toutine to our database
-  const addRoutine = () => {
-    console.log(
-      addToWorkoutState
-    );
-    console.log(routineName);
-  };
+
 
   
 
@@ -251,10 +276,10 @@ const NewRoutine = () => {
     <>
       <main
         name="NewRoutine"
-        className="w-full mt-[150px]  flex flex-row"
+        className="w-full mt-[150px] flex flex-col sm:flex-row justify-around"
       >
         <div className="w-[50%] flex flex-col items-center mx-auto sm:max-w-screen-lg max-w-screen-md ">
-          <div className="mt-10 ">
+          <div className="mt-10 ml-10">
             <Dropdown
               onSelect={
                 setSearchInput
@@ -335,41 +360,8 @@ const NewRoutine = () => {
 
         <div className="flex flex-col w-[45%] mt-[50px] items-center mx-auto max-w-screen-lg mb-4 mr-5">
           <CreateRoutine />
-          {/* <div className="flex flex-row">
-            <p className="font-bold px-4 py-3 block text-md text-gray-400 dark:text-gray-200">
-              New routine:
-            </p>
-            <input
-              className="w-[30%] p-2 font-bold block text-md text-gray-400 bg-transparent border-b-2 border-gray-300 appearance-none dark:text-gray-200 dark:border-gray-300 focus:border-gray-400 dark:focus:border-gray-500 focus:outline-none focus:ring-0"
-              placeholder="Type something"
-              required
-              name="routine_name"
-              id="routine-name"
-              type="text"
-              value={
-                routineName
-              }
-              onChange={
-                (event) => setRoutineName(event.target.value)
-              }
-            />
-            <button
-              className="ml-5 bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 hover:to-red-500 text-white font-bold py-3 px-4 rounded-md"
-              style={{
-                cursor:
-                  "pointer",
-              }}
-              type="submit"
-              variant="success"
-              onClick={
-                addRoutine
-              }
-            >
-              Save routine
-            </button> */}
-          </div>
-
-          <div className="grid grid-cols-1 gap-4 mb-4 w-full text-neutral-600 dark:text-slate-300">
+         
+          <div className="ml-[-200px] sm:ml-0 sm:mr-10 grid grid-cols-1 gap-4 mb-4 w-full text-neutral-600 dark:text-slate-300">
             <div>
               <div className="px-2 py-3">
                 <>
@@ -392,13 +384,20 @@ const NewRoutine = () => {
                           <div>
                             <div className="border-b-2 border-b-gray-400">
                               <div>
-                                <p className="px-2 py-3 m-2 font-bold">
+                                <div className="flex grid-calls plural-2">
+                                  <p className="px-2 py-3 m-2 font-bold">
                                   Exercise
                                   Name:{" "}
                                   {
                                     exercise.name
                                   }
-                                </p>
+                                  </p>
+                                  <button
+                                  onClick={
+                                          // decrementRepCount
+                                          deleteExercise
+                                        }>X</button>
+                                </div>
                                 <p className="px-2 py-3 m-2">
                                   Instructions:{" "}
                                   {
@@ -422,7 +421,7 @@ const NewRoutine = () => {
                                       Reps:
                                     </p>
 
-                                    <div className="flex flex-col">
+                                    <div className="flex flex-row">
                                       <button
                                         data-index={
                                           index
@@ -438,7 +437,7 @@ const NewRoutine = () => {
                                           handleRepsAndSets
                                         }
                                         // in state there is are mutliple workouts in an array so button needs to fins specific exercise in array to decrease or increase number
-                                        className=" ml-3 mb-[-5px]"
+                                        className=" ml-5"
                                       >
                                         +
                                         {/* <AiOutlineCaretUp /> */}
@@ -458,14 +457,14 @@ const NewRoutine = () => {
                                           // decrementRepCount
                                           handleRepsAndSets
                                         }
-                                        className="ml-3"
+                                        className=" ml-5"
                                       >
                                         -
                                         {/* <AiOutlineCaretDown /> */}
                                       </button>
                                     </div>
 
-                                    <div className="ml-3">
+                                    <div className="ml-5">
                                       {
                                         exercise.reps
                                       }
@@ -480,7 +479,7 @@ const NewRoutine = () => {
                                       Sets:
                                     </p>
 
-                                    <div className="flex flex-col">
+                                    <div className="flex flex-row">
                                       <button
                                         data-index={
                                           index
@@ -495,7 +494,7 @@ const NewRoutine = () => {
                                           // incrementSetCount
                                           handleRepsAndSets
                                         }
-                                        className=" ml-3 mb-[-5px]"
+                                        className=" ml-5 "
                                       >
                                         +
                                         {/* <AiOutlineCaretUp /> */}
@@ -515,14 +514,14 @@ const NewRoutine = () => {
                                           // decrementSetCount
                                           handleRepsAndSets
                                         }
-                                        className="ml-3"
+                                        className=" ml-5"
                                       >
                                         -
                                         {/* <AiOutlineCaretDown /> */}
                                       </button>
                                     </div>
 
-                                    <div className="ml-3">
+                                    <div className="ml-5">
                                       {
                                         exercise.sets
                                       }
@@ -539,6 +538,7 @@ const NewRoutine = () => {
                 </div>
               </div>
             </div>
+          </div>
           </div>
         {/* </div> */}
       </main>
