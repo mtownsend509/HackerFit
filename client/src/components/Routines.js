@@ -38,7 +38,7 @@ const handleDeleteRoutine = async (routineId) => {
       // });
     }
   } catch (err) {
-    console.error(err);
+    console.error(err.networkError.result.errors);
   }
 };
 

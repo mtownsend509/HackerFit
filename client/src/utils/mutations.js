@@ -102,8 +102,8 @@ export const UPDATE_ROUTINE = gql`
 `;
 
 export const DELETE_ROUTINE = gql`
-  mutation deleteRoutine($routineName: String!, $exerciseName: String!) {
-    deleteRoutine(routineName: $routineName, exerciseName: $exerciseName) {
+  mutation deleteRoutine($routineId: ID!) {
+    deleteRoutine(routineId: $routineId) {
       _id
     }
   }
