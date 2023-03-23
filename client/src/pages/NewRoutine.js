@@ -225,7 +225,7 @@ const NewRoutine = () => {
     const exerciseName = event.target.parentElement.children[0].innerHTML.slice(15);
     const title = window.localStorage.getItem("routinename");
     const exerciseObject = {exerciseName: exerciseName, routineName: title}
-    console.log(exerciseObject)
+    console.log("exerciseObject", exerciseObject)
     try{
       const {data} = await delExercise({
         variables: {...exerciseObject}
