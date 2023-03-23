@@ -205,6 +205,7 @@ const NewRoutine = () => {
         variables: {...newObject}
       });
       console.log(data);
+      window.alert("exercise added")
           setAddToWorkoutState([
       ...addToWorkoutState,
       {
@@ -219,6 +220,7 @@ const NewRoutine = () => {
 
   };
 
+
   const[delExercise, {newerror,newdata}] = useMutation(DELETE_EXERCISE);
   const deleteExercise = async (event) => {
     console.log(event.target.parentElement.children[0].innerHTML.slice(15));
@@ -230,7 +232,13 @@ const NewRoutine = () => {
       const {data} = await delExercise({
         variables: {...exerciseObject}
       });
-      window.alert(`It's deleted believe me plz`)
+      
+      function test (exercise) {
+        return exercise.name !== exerciseName;
+      }
+      setAddToWorkoutState(
+        addToWorkoutState.filter(test)
+      );
     } catch (e) {
       console.error("shit gdi", e.networkError.result.errors)
     } 

@@ -36,7 +36,8 @@ const handleDeleteRoutine = async (routineId) => {
       //   query: QUERY_ME,
       //   data: { me: updatedUserData },
       // });
-    }
+    };
+    this.forceUpdate();
   } catch (err) {
     console.error(err.networkError.result.errors);
   }
