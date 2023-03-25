@@ -57,7 +57,7 @@ const Routines = () => {
     <div className="container mt-[150px]">
       <div className="w-full flex flex-col mx-auto max-w-screen-lg">
         <h1 className="flex justify-start text-4xl mb-10 mt-10 dark:text-slate-300 text-slate-400 ml-5">
-          Hello {user.username}! Here is a list of your favorite workouts
+          Hello {user.username}! Here is a list of your favorite workouts, please refresh page to see current Routine Log
         </h1>
         <div className="">
           {user.savedRoutines.map((routine) => (
