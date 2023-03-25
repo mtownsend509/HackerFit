@@ -97,7 +97,7 @@ const [exerciseState, setExerciseState] = useState({
   if( window.localStorage.getItem("routinename") !== null) {
     return (
       <>
-     <div>{window.localStorage.getItem("routinename")}</div>
+     <div className='text-lg border-b-4'><h2>{window.localStorage.getItem("routinename")}</h2></div>
     </>
     )
   }

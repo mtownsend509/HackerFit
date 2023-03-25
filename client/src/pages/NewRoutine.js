@@ -356,7 +356,7 @@ const NewRoutine = () => {
             <Dropdown onSelect={setSearchInput} />
           </div>
 
-          <div className="grid mt-[-200px] gap-4 text-neutral-600 dark:text-slate-300 grid-cols-1 mb-10/">
+          <div className="grid mt-[-200px] gap-4 text-neutral-600 dark:text-slate-300 grid-cols-1 mb-10">
             {searchedExercises.map((exercise) => {
               return (
                 <div key={exercise.name}>

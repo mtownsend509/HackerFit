@@ -4,6 +4,16 @@
 ![Last Commit to Current Repo](https://img.shields.io/github/last-commit/mtownsend509/HackerFit)
 ![Commits a month](https://img.shields.io/github/commit-activity/m/mtownsend509/HackerFit)
 
+## Table of Contents
+- [Description](#description)
+- [API-and-Framework](#api-and-framework)
+- [User-Story](#user-story)
+- [Credits](#credits)
+- [License](#license)
+- [Deployed](#deployed)
+- [Moving-Forward](#moving-forward)
+- [Contact](#contact)
+
 ## Description
 
 Introducing Hacker Fit, a React-based web application designed to simplify the search for exercise routines based on specific muscle groups. With the ability to create custom workout routines, users can easily keep track of their fitness goals. We developed this app to streamline the process of discovering new exercises, and to allow users to explore and diversify their fitness routine.
@@ -12,7 +22,7 @@ During the development of this app, we expanded our knowledge of Graphql, Apollo
 
 Overall, Hacker Fit offers an intuitive and effective solution for individuals looking to enhance their fitness routine and stay on track with their goals.
 
-## APIs/Frameworks
+## API and Framework
 - <a href="https://api-ninjas.com/api/exercises" >Exercise Ninjas API</a>
 - <a href="https://tailwindcss.com/" >Tailwind CSS</a>
 
@@ -38,7 +48,6 @@ Find our site [here](https://young-fjord-19401.herokuapp.com/)! Live deployed on
 Some future ideas we have for this application:
  - Add a calendar
  - Do a version with video instructions
- - Add a Profile Picture
  - Implement fucntionality to add friends and share routines 
  - Use a more robust API
 
